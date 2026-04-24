@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Obserc Your World. Shared & Secured.</title>
+  <meta name="description" content="Obserc is your ultimate personal safety companion. From daily check-ins to instant SOS alerts, stay connected to your inner circle with ease." />
+  <meta name="keywords" content="Obserc, personal safety app, circle safety, SOS beacon, location sharing, night out mode, check-in app" />
+  <link rel="canonical" href="https://obserc.com" />
+  <link rel="icon" type="image/svg+xml" href="obserc-favicon.svg" />
+  <link rel="icon" type="image/png" href="obserc-logo.png" sizes="32x32" />
+  <meta property="og:title" content="Obserc Your World. Shared & Secured." />
+  <meta property="og:description" content="From daily check-ins to instant SOS alerts, stay connected to your inner circle with ease." />
+  <meta property="og:url" content="https://obserc.com" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://obserc.com/social-preview.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Obserc app interface and features preview" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Obserc Your World. Shared & Secured." />
+  <meta name="twitter:description" content="From daily check-ins to instant SOS alerts, stay connected to your inner circle with ease." />
+  <meta name="twitter:image" content="https://obserc.com/social-preview.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ═══ INTERACTIVE SOS MODAL STYLES ═══ */
+    
+    /* The floating trigger button on the left of the hero */
+    .interactive-sos-trigger {
+      position: absolute;
+      left: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s;
+      z-index: 10;
+      width: 140px;
+      text-align: center;
+    }
+    .interactive-sos-trigger:hover {
+      transform: translateY(-50%) scale(1.05);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(229,57,53,0.3);
+    }
+    .interactive-sos-trigger .trigger-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--red-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--red);
+      position: relative;
+    }
+    .interactive-sos-trigger .trigger-icon::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid var(--red);
+      opacity: 0.5;
+      animation: pulse-ring 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    .interactive-sos-trigger .trigger-text {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    /* Hide the interactive trigger on mobile devices */
+    @media (max-width: 900px) {
+      .interactive-sos-trigger {
+        display: none !important;
+      }
+    }
+
+    /* Modal Overlay */
+    .sos-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 13, 20, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.4s ease, visibility 0s 0.4s;
+    }
+    .sos-modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition-delay: 0s;
+    }
+    .sos-modal-overlay:not(.active) * {
+      pointer-events: none;
+    }
+
+    /* Modal Container (The "Phone" screen) */
+    .sos-modal-container {
+      width: 320px;
+      height: 600px;
+      background: #ffffff;
+      border-radius: 40px;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+      transform: translateY(40px) scale(0.95);
+      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+      display: flex;
+      flex-direction: column;
+    }
+    .sos-modal-overlay.active .sos-modal-container {
+      transform: translateY(0) scale(1);
+    }
+
+    /* Close Button */
+    .sos-modal-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 32px;
+      height: 32px;
+      background: rgba(0,0,0,0.05);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      transition: background 0.2s;
+    }
+    .sos-modal-close:hover {
+      background: rgba(0,0,0,0.1);
+    }
+
+    /* Step Containers */
+    .sos-step {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateX(20px);
+    }
+    .sos-step.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+    .sos-step.exit-left {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    /* Step 1: The Button */
+    .sos-interactive-btn {
+      width: 140px;
+      height: 140px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      margin-bottom: 32px;
+      box-shadow: 0 12px 32px rgba(229,57,53,0.4);
+      transition: transform 0.2s;
+    }
+    .sos-interactive-btn:active {
+      transform: scale(0.95);
+    }
+    .sos-interactive-btn::before, .sos-interactive-btn::after {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      border-radius: 50%;
+      border: 2px solid var(--red);
+      opacity: 0;
+    }
+    .sos-interactive-btn::before {
+      animation: pulse-ring 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    .sos-interactive-btn::after {
+      animation: pulse-ring 2s infinite 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    .sos-interactive-btn img {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+    }
+    
+    /* Typography inside modal */
+    .sos-modal-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .sos-modal-desc {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Step 2: Countdown */
+    .sos-countdown-img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+      margin-bottom: 24px;
+    }
+    .countdown-number {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--red);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    
+    /* Step 3: Success CTA */
+    .sos-success-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--green-light);
+      color: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+
+</head>
+<body>
+
+<nav class="pill-nav" role="navigation" aria-label="Main navigation">
+  <a href="/" class="nav-logo-circle" aria-label="Obserc home">
+    <img src="obserc-favicon.svg" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="eager" />
+    <span class="nav-logo-fallback" style="display:none;" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg>
+    </span>
+  </a>
+  
+  <div class="nav-menu-wrapper" id="nav-wrapper">
+    <div class="nav-slider" id="nav-slider"></div>
+    <a href="/" class="nav-item active-text default-active">Home</a>
+    <a href="/guides.html" class="nav-item">Guides</a>
+    <a href="/features.html" class="nav-item ">Features</a>
+    <a href="/support.html" class="nav-item">Support</a>
+    <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="nav-item" target="_blank" rel="noopener noreferrer">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero" aria-label="Hero section">
+  <div class="container" style="position: relative;">
+    
+    <div class="interactive-sos-trigger fade-in" id="openSosModal" aria-label="Test the SOS Beacon Flow">
+      <div class="trigger-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="trigger-text">Test the<br/>SOS Beacon</div>
+    </div>
+
+    <div class="stagger" style="display:flex;flex-direction:column;align-items:center;">
+      <div class="hero-badge"><span class="dot" aria-hidden="true"></span>Live on the App Store</div>
+      <h1>
+        <span class="hero-line-sans">A safety control plane</span>
+        <span class="hero-line-serif"><span>for real life.</span></span>
+      </h1>
+      <p class="hero-sub">Obserc turns your trusted circle into a calm, live safety network with location context, smart check-ins, Night Out Mode, and one-tap SOS escalation.</p>
+      <div class="hero-actions">
+        <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="btn-hero" target="_blank" rel="noopener noreferrer" aria-label="Get Obserc on the App Store">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          Download Now
+        </a>
+        <a href="/features.html" class="btn-hero-outline" aria-label="Explore Obserc features">See the System</a>
+      </div>
+      <div class="hero-proof" aria-label="Obserc product highlights">
+        <div><strong>10s</strong><span>SOS cancel window</span></div>
+        <div><strong>Live</strong><span>Circle awareness</span></div>
+        <div><strong>24/7</strong><span>Backup readiness</span></div>
+      </div>
+    </div>
+
+    <div class="hero-phones fade-in" role="img" aria-label="Obserc app screenshots: Night Out Mode, Home Screen, Circle Map">
+      <div class="phone-wrap left phone-left-anim phone-float-left">
+        <img src="nightoutscreen.png" alt="Obserc Night Out Mode screen showing live squad tracking and I Feel Off button" loading="lazy" />
+      </div>
+      <div class="phone-wrap center phone-center-anim phone-float-anim" style="position:relative;">
+        <img src="homescreen.png" alt="Obserc home screen showing Your Status, Circle Weak, Night Out and SOS Beacon features" loading="eager" />
+        <div class="notif-float" aria-hidden="true">
+          <img src="obsercnotification1.png" alt="Obserc notification: Circle Activity   James activated Find My Squad" style="width:230px;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.18);" loading="lazy" />
+        </div>
+        <div class="notif-float right-notif" aria-hidden="true">
+          <img src="obsercnotification3.png" alt="Obserc notification: Afternoon Check-in prompt" style="width:210px;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.18);" loading="lazy" />
+        </div>
+      </div>
+      <div class="phone-wrap right phone-right-anim phone-float-right">
+        <img src="circlescreen.png" alt="Obserc circle map showing live locations of circle members in Tralee, Co. Kerry" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-bar" role="marquee" aria-label="Feature highlights">
+  <div class="marquee"><div class="marquee-track" aria-hidden="true">
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>Real-Time Location Sharing</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>SOS Beacon Emergency Alerts</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Safety Circle Management</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Smart Check-In Prompts</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Backup Stability Mode</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>Night Out Mode</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Find My Squad</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>Real-Time Location Sharing</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>SOS Beacon Emergency Alerts</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Safety Circle Management</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Smart Check-In Prompts</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Backup Stability Mode</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>Night Out Mode</span>
+    <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Find My Squad</span>
+  </div></div>
+</div>
+
+<section class="bento-section" aria-labelledby="features-heading">
+  <div class="container">
+    <div class="section-header stagger">
+      <p class="section-label">Safety System</p>
+      <h2 class="section-heading" id="features-heading">Every signal your circle needs, organized.</h2>
+      <p class="section-sub">A clean layer for status, location, nudges, escalation, and recovery. Built for everyday life, not just emergency moments.</p>
+    </div>
+    <div class="bento-grid">
+      <div class="bento-card col-5 reveal" style="display:flex;flex-direction:column;">
+        <div class="card-icon"><img src="mailicon.png" alt="Push notification mail icon" loading="lazy" /></div>
+        <p class="card-title">Smart Push Notifications</p>
+        <p class="card-desc">Stay on top of every circle activity, including check-ins, nudges, SOS alerts, and safety prompts delivered instantly.</p>
+        <div class="notif-stack" aria-label="Sample Obserc notifications">
+          <div class="notif-pill"><img src="obsercnotification1.png" alt="Circle Activity: James activated Find My Squad to locate you" loading="lazy" /></div>
+          <div class="notif-pill"><img src="obsercnotification2.png" alt="Afternoon Check-in: Feeling unwell? Your circle is a tap away" loading="lazy" /></div>
+          <div class="notif-pill"><img src="obsercnotification4.png" alt="Separation Alert: Away from Mia for 6 minutes, everything okay?" loading="lazy" /></div>
+          <div class="notif-pill"><img src="obsercnotification5.png" alt="Night Out Summary: Night Out Report ready, tap to view full details" loading="lazy" /></div>
+          <div class="notif-pill"><img src="obsercnotification6.png" alt="Battery Risk Warning: Low battery, Backup Stability Mode is now active" loading="lazy" /></div>
+        </div>
+      </div>
+      <div style="grid-column:span 7;display:flex;flex-direction:column;gap:16px;">
+        <div class="bento-card reveal" style="display:flex;gap:20px;align-items:center;">
+          <div style="flex:1;">
+            <div class="card-icon yellow-icon"><img src="locationicon.png" alt="Location pin icon" loading="lazy" /></div>
+            <p class="card-title">Real-Time Location Insights</p>
+            <p class="card-desc">Track your circle's location with live updates when you feel uneasy or during a night out.</p>
+          </div>
+          <div style="flex-shrink:0;width:140px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
+            <img src="circlescreen.png" alt="Obserc circle map showing live member locations in Tralee, Co. Kerry" loading="lazy" style="width:100%;" />
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="bento-card accent-card reveal">
+            <div class="card-icon white-icon"><img src="thumbs_up_icon.png" alt="Thumbs up icon representing positive App Store reviews" loading="lazy" /></div>
+            <div class="stat-highlight" data-count="10000">0</div>
+            <p class="card-title" style="color:#fff;">Safety Moments</p>
+            <p class="card-desc">covered by calmer coordination</p>
+          </div>
+          <div class="bento-card reveal">
+            <div class="card-icon green-icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
+            </div>
+            <div class="stat-highlight" style="color:var(--green);" data-count="99">0</div>
+            <p class="card-title">% Uptime Reliability</p>
+            <p class="card-desc">Always there when it counts</p>
+          </div>
+        </div>
+        <div class="bento-card reveal" style="display:flex;gap:20px;align-items:center;">
+          <div style="flex:1;">
+            <div class="card-icon yellow-icon"><span style="font-size:22px;" role="img" aria-label="Fire emoji for streak">🔥</span></div>
+            <p class="card-title">Daily Streak System</p>
+            <p class="card-desc">Open Obserc daily to build your streak from Firewood to Phoenix. Miss 2 days and reset.</p>
+          </div>
+          <div style="flex-shrink:0;width:140px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
+            <img src="obserchomestreak.png" alt="Obserc streak levels: Firewood (0-2 days), Flame (3-6), Fireball (7-13), Phoenix (14+ days)" loading="lazy" style="width:100%;" />
+          </div>
+        </div>
+      </div>
+      <div class="bento-card accent-card col-12 reveal" style="display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;">
+        <div>
+          <div class="nightout-badge"><span class="sos-pulse" aria-hidden="true"></span>Emergency Feature</div>
+          <p class="card-title" style="font-size:22px;color:#fff;">Your Personal SOS Beacon</p>
+          <p class="card-desc" style="font-size:15px;max-width:420px;">Instantly share your live location and an emergency alert with the people you trust most, right when you need them. Tap for standard SOS, hold 3 seconds for critical.</p>
+          <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="btn-white" style="margin-top:24px;display:inline-flex;" target="_blank" rel="noopener noreferrer" aria-label="Download Obserc to use SOS Beacon">Get the App</a>
+        </div>
+        <div style="display:flex;gap:12px;flex-shrink:0;">
+          <img src="sosbeaconscreen.png" alt="Obserc SOS Beacon screen: tap for circle alert, hold for emergency contacts" loading="lazy" style="width:110px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.4);" />
+          <img src="criticalsosoverlay.png" alt="Obserc Critical SOS red overlay screen showing Slide to cancel SOS" loading="lazy" style="width:110px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.4);margin-top:20px;" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="nightout-section" aria-labelledby="nightout-heading">
+  <div class="container">
+    <div class="stagger" style="max-width:600px;">
+      <p class="section-label">Night Out Mode</p>
+      <h2 class="section-heading" id="nightout-heading">Stay connected<br/>when it matters most.</h2>
+      <p class="section-sub">When the music is loud and plans change fast, Night Out Mode keeps everyone aligned, visible, and protected without killing the vibe.</p>
+    </div>
+    <div class="nightout-grid">
+      <div class="nightout-card reveal">
+        <div class="nightout-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Live Feature</div>
+        <p class="card-title">Find My Squad</p>
+        <p class="card-desc">Activate live radar to find exactly where your friends are in real time, even in crowded venues.</p>
+      </div>
+      <div class="nightout-card reveal" style="text-align:center;">
+        <div class="nightout-screen">
+          <img src="nightoutscreen.png" alt="Obserc Night Out screen showing Night Out Active with Open Dashboard, Safety Call, Add Member and Find My Squad" loading="lazy" />
+        </div>
+      </div>
+      <div class="nightout-card reveal">
+        <div class="nightout-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>After Night</div>
+        <p class="card-title">Night Out Reports</p>
+        <p class="card-desc">Wake up to a full summary of your night   where you went, when, and who was with you.</p>
+      </div>
+      <div class="nightout-card reveal">
+        <div class="nightout-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.18 19.79 19.79 0 01.1 4.18 2 2 0 012.18 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L5.92 11.4a16 16 0 006.06 6.06l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>Safety</div>
+        <p class="card-title">Safety Call</p>
+        <p class="card-desc">One-tap safety call connects you to a trusted person in your circle instantly when you feel unsafe.</p>
+      </div>
+      <div class="nightout-card reveal">
+        <div class="nightout-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Wellness</div>
+        <p class="card-title">I Feel Off Button</p>
+        <p class="card-desc">Not feeling great? Tap "I Feel Off" to silently alert your circle that you might need help soon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sos-section" aria-labelledby="sos-heading">
+  <div class="container">
+    <div class="sos-inner">
+      <div class="reveal">
+        <div class="sos-phone-stack">
+          <img src="beaconbeingsentobserc.png" alt="Obserc SOS countdown: Your SOS is going to be sent in 9 seconds" loading="lazy" />
+          <img src="criticalsosbeingsent.png" alt="Obserc Critical SOS: 4 seconds before sending to emergency contacts and circle" loading="lazy" />
+        </div>
+      </div>
+      <div class="reveal">
+        <span class="sos-badge"><span class="sos-pulse" aria-hidden="true"></span>Emergency Ready</span>
+        <h2 class="section-heading" id="sos-heading">Help is always<br/>one tap away.</h2>
+        <p class="section-sub" style="margin-bottom:32px;">Tap for a standard SOS to your circle. Hold for 3 seconds for a critical alert to both your circle and emergency contacts, with your live location attached.</p>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;align-items:flex-start;gap:12px;">
+            <div style="width:32px;height:32px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" aria-hidden="true"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg></div>
+            <div><p style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px;">Live location sharing</p><p style="font-size:13px;color:var(--muted);">Your exact position sent instantly to trusted contacts</p></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;">
+            <div style="width:32px;height:32px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div><p style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px;">Circle &amp; emergency contacts</p><p style="font-size:13px;color:var(--muted);">Notify just your circle, or escalate to all emergency contacts</p></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;">
+            <div style="width:32px;height:32px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+            <div><p style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px;">10-second cancel window</p><p style="font-size:13px;color:var(--muted);">Accidentally triggered? Slide to cancel before it sends</p></div>
+          </div>
+        </div>
+        <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="btn-hero" style="margin-top:32px;display:inline-flex;background:var(--red);" target="_blank" rel="noopener noreferrer" aria-label="Download Obserc for SOS Beacon feature">
+          <img src="sosbeacon.png" alt="" role="presentation" style="width:18px;height:18px;object-fit:contain;" loading="lazy" />
+          Download Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="people-section" aria-labelledby="people-heading">
+  <div class="container">
+    <div class="section-header stagger" style="text-align:center;">
+      <p class="section-label">Your Circle</p>
+      <h2 class="section-heading" id="people-heading">Your Circle. Your People.<br/>Your Protection.</h2>
+      <p class="section-sub" style="margin:0 auto;">For friends heading out, families staying connected, and anyone who matters to you.</p>
+    </div>
+    <div class="people-grid">
+      <div class="people-card reveal"><img src="obsercfriends.jpg" alt="Group of friends using Obserc to stay connected and safe during a night out" loading="lazy" /><div class="people-card-label">Friends</div></div>
+      <div class="people-card reveal" style="transition-delay:0.1s;"><img src="frindswhouseobserc.jpg" alt="Friends using Obserc safety circle feature to stay connected" loading="lazy" /><div class="people-card-label">Circles</div></div>
+      <div class="people-card reveal" style="transition-delay:0.2s;"><img src="obsercusers.jpg" alt="Obserc users sharing their location and staying safe with the app" loading="lazy" /><div class="people-card-label">Anyone that matters</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials-section" aria-labelledby="testimonials-heading">
+  <div class="container">
+    <div class="section-header stagger" style="text-align:center;">
+      <p class="section-label">Reviews</p>
+      <h2 class="section-heading" id="testimonials-heading">Loved by circles<br/>everywhere.</h2>
+    </div>
+    <div class="carousel-wrap" role="region" aria-label="User testimonials" aria-roledescription="carousel">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="Slide 1 of 6"><div class="stars" aria-label="5 out of 5 stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testimonial-text">"Obserc has been a game changer for our friend group. Night Out Mode means nobody gets left behind and we always know where everyone is."</p><div class="testimonial-author"><div class="author-avatar" aria-hidden="true">S</div><div><p class="author-name">Sarah M.</p><p class="author-handle">App Store Review</p></div></div></div>
+        <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="Slide 2 of 6"><div class="stars" aria-label="5 out of 5 stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testimonial-text">"The SOS Beacon is incredible. As a mum, knowing my daughter can reach me instantly in an emergency gives me so much peace of mind."</p><div class="testimonial-author"><div class="author-avatar" aria-hidden="true">P</div><div><p class="author-name">Patricia K.</p><p class="author-handle">App Store Review</p></div></div></div>
+        <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="Slide 3 of 6"><div class="stars" aria-label="5 out of 5 stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testimonial-text">"Love the check-in prompts! So thoughtful   the app genuinely feels like it cares about your wellbeing. My whole circle uses it now."</p><div class="testimonial-author"><div class="author-avatar" aria-hidden="true">J</div><div><p class="author-name">James O.</p><p class="author-handle">App Store Review</p></div></div></div>
+        <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="Slide 4 of 6"><div class="stars" aria-label="5 out of 5 stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testimonial-text">"The battery risk warning saved me once when I was alone   it auto-activated backup mode so my circle could still find me. Brilliant feature."</p><div class="testimonial-author"><div class="author-avatar" aria-hidden="true">L</div><div><p class="author-name">Lena R.</p><p class="author-handle">App Store Review</p></div></div></div>
+        <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="Slide 5 of 6"><div class="stars" aria-label="5 out of 5 stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testimonial-text">"Night Out Reports are so cool. Waking up to see a full summary of where the night went is both fun and reassuring. Recommend to everyone."</p><div class="testimonial-author"><div class="author-avatar" aria-hidden="true">M</div><div><p class="author-name">Mia T.</p><p class="author-handle">App Store Review</p></div></div></div>
+        <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="Slide 6 of 6"><div class="stars" aria-label="5 out of 5 stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testimonial-text">"The separation alert feature is so useful at festivals. It tells you exactly when you've drifted from someone in your group. Absolute 10/10."</p><div class="testimonial-author"><div class="author-avatar" aria-hidden="true">D</div><div><p class="author-name">Dylan F.</p><p class="author-handle">App Store Review</p></div></div></div>
+      </div>
+    </div>
+    <div class="carousel-btns" role="group" aria-label="Carousel controls">
+      <button class="carousel-btn" id="prevBtn" aria-label="Previous testimonial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15,18 9,12 15,6"/></svg></button>
+      <button class="carousel-btn" id="nextBtn" aria-label="Next testimonial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9,18 15,12 9,6"/></svg></button>
+    </div>
+    <div class="carousel-dots" role="tablist" aria-label="Testimonial navigation" id="carouselDots"></div>
+  </div>
+</section>
+
+<section class="links-section" aria-labelledby="links-heading">
+  <div class="container">
+    <div class="section-header stagger" style="text-align:center;">
+      <p class="section-label">Resources</p>
+      <h2 class="section-heading" id="links-heading">Everything you need.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;" class="stagger">
+      <a href="/guides.html" class="bento-card" aria-label="Read Obserc user guides and tutorials">
+        <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" aria-hidden="true"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
+        <p class="card-title">User Guides</p><p class="card-desc">Step-by-step tutorials for all Obserc features   from setup to advanced safety modes.</p>
+        <p style="margin-top:16px;font-size:13px;color:var(--accent);font-weight:600;">Read guides →</p>
+      </a>
+      <a href="https://devpost.com/software/obserc" target="_blank" rel="noopener noreferrer" class="bento-card" aria-label="View Obserc on Devpost   our hackathon project page">
+        <div class="card-icon yellow-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2" aria-hidden="true"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg></div>
+        <p class="card-title">Devpost Page</p><p class="card-desc">Learn how Obserc was built   our tech stack, hackathon journey, and open-source vision.</p>
+        <p style="margin-top:16px;font-size:13px;color:var(--yellow);font-weight:600;">View on Devpost →</p>
+      </a>
+      <a href="/features.html" class="bento-card" aria-label="Explore all Obserc app features">
+        <div class="card-icon green-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+        <p class="card-title">All Features</p><p class="card-desc">Explore the full feature set   SOS Beacon, Night Out Mode, Circle Map, Streaks and more.</p>
+        <p style="margin-top:16px;font-size:13px;color:var(--green);font-weight:600;">Explore all →</p>
+      </a>
+      <a href="/support.html" class="bento-card" aria-label="Get help from Obserc support">
+        <div class="card-icon red-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <p class="card-title">Support</p><p class="card-desc">Got a question or issue? Our team is here to help you get the most out of Obserc.</p>
+        <p style="margin-top:16px;font-size:13px;color:var(--red);font-weight:600;">Get support →</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" aria-labelledby="cta-heading">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <div class="cta-glow cta-glow-1" aria-hidden="true"></div>
+      <div class="cta-glow cta-glow-2" aria-hidden="true"></div>
+      <div style="position:relative;z-index:1;">
+        <p class="section-label" style="color:rgba(255,255,255,0.4);">Download Now</p>
+        <h2 class="section-heading" id="cta-heading" style="color:#fff;">Start protecting<br/>your circle today.</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,0.55);margin:0 auto 40px;">Get Obserc on the App Store. No subscription required to start protecting your circle.</p>
+        <div class="cta-actions">
+          <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="btn-white" target="_blank" rel="noopener noreferrer" aria-label="Get Obserc on the App Store">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Download Now
+          </a>
+          <a href="/guides.html" class="btn-ghost" aria-label="Read Obserc getting started guide">Read Getting Started Guide</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blog-preview-section">
+  <div class="container">
+    <p class="section-label" style="margin-bottom:12px;">From the Blog</p>
+    <h2 class="section-heading" style="margin-bottom:12px;">Insights, guides &amp; updates</h2>
+    <p class="section-sub" style="max-width:520px;margin:0 auto 48px;">See how Obserc keeps you and your circle safer every day.</p>
+    <div class="blog-preview-grid">
+
+      <a href="blog/introducing-obserc.html" style="text-decoration:none;display:block;background:#fff;border:1px solid rgba(0,0,0,0.07);border-radius:16px;overflow:hidden;" onmouseenter="this.style.boxShadow='0 8px 32px rgba(0,0,0,0.1)'" onmouseleave="this.style.boxShadow='none'">
+        <div style="background:#eff6ff;padding:28px;text-align:center;font-size:40px;">&#128308;</div>
+        <div style="padding:24px;">
+          <span style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#3b82f6;background:#eff6ff;padding:4px 12px;border-radius:100px;margin-bottom:12px;">About</span>
+          <h3 style="font-family:var(--font-display);font-size:17px;font-weight:800;color:var(--text);margin-bottom:10px;letter-spacing:-0.3px;line-height:1.3;">Introducing Obserc: The Personal Safety App Built Around Your Circle</h3>
+          <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:16px;">Safety is a team sport. Here's the story behind Obserc and the philosophy shaping every feature.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:12px;color:var(--muted);">Mar 29, 2026 &middot; 3 min</span>
+            <span style="font-size:13px;font-weight:600;color:#3b82f6;">Read more &rarr;</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="blog/night-out-mode.html" style="text-decoration:none;display:block;background:#fff;border:1px solid rgba(0,0,0,0.07);border-radius:16px;overflow:hidden;" onmouseenter="this.style.boxShadow='0 8px 32px rgba(0,0,0,0.1)'" onmouseleave="this.style.boxShadow='none'">
+        <div style="background:#f5f3ff;padding:28px;text-align:center;font-size:40px;">&#127761;</div>
+        <div style="padding:24px;">
+          <span style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#253CED;background:#eff6ff;padding:4px 12px;border-radius:100px;margin-bottom:12px;">Features</span>
+          <h3 style="font-family:var(--font-display);font-size:17px;font-weight:800;color:var(--text);margin-bottom:10px;letter-spacing:-0.3px;line-height:1.3;">Night Out Mode: How Obserc Keeps You Safe When It Matters Most</h3>
+          <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:16px;">Squad tracking, the I Feel Off button, and a Safety Call that actually works, all in one mode.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:12px;color:var(--muted);">Mar 29, 2026 &middot; 3 min</span>
+            <span style="font-size:13px;font-weight:600;color:#3b82f6;">Read more &rarr;</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="blog/obserc-drive.html" style="text-decoration:none;display:block;background:#fff;border:1px solid rgba(0,0,0,0.07);border-radius:16px;overflow:hidden;" onmouseenter="this.style.boxShadow='0 8px 32px rgba(0,0,0,0.1)'" onmouseleave="this.style.boxShadow='none'">
+        <div style="background:#fefce8;padding:28px;text-align:center;font-size:40px;">&#128663;</div>
+        <div style="padding:24px;">
+          <span style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#f5a623;background:#fefce8;padding:4px 12px;border-radius:100px;margin-bottom:12px;">Features</span>
+          <h3 style="font-family:var(--font-display);font-size:17px;font-weight:800;color:var(--text);margin-bottom:10px;letter-spacing:-0.3px;line-height:1.3;">Never Drive Alone: How Obserc Watches Over Every Journey</h3>
+          <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:16px;">Auto detection, live journey cards, Drive SOS, and safe arrival pings, all without lifting a finger.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:12px;color:var(--muted);">Mar 29, 2026 &middot; 3 min</span>
+            <span style="font-size:13px;font-weight:600;color:#3b82f6;">Read more &rarr;</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <a href="blog/index.html" class="btn-ghost">View all posts &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="obserc-logo.png" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="lazy" />
+          <span class="footer-logo-fallback" style="display:none;" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg></span>
+          Obserc
+        </div>
+        <p class="footer-tagline">Your world. Shared &amp; Secured. Personal safety for you and everyone you care about.</p>
+      </div>
+      <nav aria-label="Product links"><h4>Product</h4>
+        <ul class="footer-links">
+          <li><a href="/features.html">Features</a></li>
+          <li><a href="/guides.html">Guides</a></li>
+          <li><a href="/location-usage.html">Location Usage</a></li> 
+          <li><a href="https://apps.apple.com/ca/app/obserc/id6759740570" target="_blank" rel="noopener noreferrer">App Store</a></li>
+          <li><a href="https://devpost.com/software/obserc" target="_blank" rel="noopener noreferrer">Devpost</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Support links"><h4>Support</h4>
+        <ul class="footer-links">
+          <li><a href="/support.html">Contact Us</a></li>
+          <li><a href="/faq.html">FAQ</a></li>
+          <li><a href="mailto:support@obserc.com">support@obserc.com</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Legal links"><h4>Legal</h4>
+        <ul class="footer-links">
+          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms of Service</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year">2026</span> Obserc. All rights reserved.</p>
+      <div class="footer-socials" aria-label="Social links">
+        <a href="https://devpost.com/software/obserc" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Obserc on Devpost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg></a>
+        <a href="mailto:support@obserc.com" class="social-btn" aria-label="Email Obserc support"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="sos-modal-overlay" id="sosModalOverlay">
+  <div class="sos-modal-close" id="sosModalClose" aria-label="Close modal">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </div>
+
+  <div class="sos-modal-container">
+    
+    <div class="sos-step active" id="sosStep1">
+      <div class="sos-interactive-btn" id="sosTriggerBtn">
+        <img src="sosbeacon.png" alt="SOS Icon" />
+      </div>
+      <h3 class="sos-modal-title">Test SOS Beacon</h3>
+      <p class="sos-modal-desc">Tap the button above to simulate sending an urgent alert to your circle.</p>
+    </div>
+
+    <div class="sos-step" id="sosStep2">
+      <img src="beaconbeingsentobserc.png" alt="Countdown in progress" class="sos-countdown-img" />
+      <div class="countdown-number" id="sosCountdownNumber">10</div>
+      <h3 class="sos-modal-title">Sending SOS...</h3>
+      <p class="sos-modal-desc">You have 10 seconds to cancel before your circle is alerted with your live location.</p>
+    </div>
+
+    <div class="sos-step" id="sosStep3">
+      <div class="sos-success-icon">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3 class="sos-modal-title">SOS Sent</h3>
+      <p class="sos-modal-desc" style="margin-bottom: 32px;">Your circle would now be alerted with your live location.</p>
+      
+      <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="btn-hero" style="background: var(--navy); width: 100%; justify-content: center; padding: 16px;" target="_blank" rel="noopener noreferrer">
+        Get the App Free
+      </a>
+      <button class="btn-ghost" style="color: var(--muted); border-color: var(--border-strong); width: 100%; margin-top: 12px; padding: 14px;" id="sosModalReset">Try Again</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ═══ INTERACTIVE SOS LOGIC ═══
+  const openSosModalBtn = document.getElementById('openSosModal');
+  const sosModalOverlay = document.getElementById('sosModalOverlay');
+  const sosModalClose = document.getElementById('sosModalClose');
+  
+  const step1 = document.getElementById('sosStep1');
+  const step2 = document.getElementById('sosStep2');
+  const step3 = document.getElementById('sosStep3');
+  
+  const sosTriggerBtn = document.getElementById('sosTriggerBtn');
+  const countdownNumber = document.getElementById('sosCountdownNumber');
+  const sosModalReset = document.getElementById('sosModalReset');
+
+  let countdownInterval;
+
+  // Open Modal
+  openSosModalBtn.addEventListener('click', () => {
+    sosModalOverlay.classList.add('active');
+  });
+
+  // Close Modal
+  function closeModal() {
+    sosModalOverlay.classList.remove('active');
+    setTimeout(resetSosFlow, 400); // Reset after fade out
+  }
+  sosModalClose.addEventListener('click', closeModal);
+  sosModalOverlay.addEventListener('click', (e) => {
+    if(e.target === sosModalOverlay) closeModal();
+  });
+
+  // Trigger SOS -> Go to Countdown
+  sosTriggerBtn.addEventListener('click', () => {
+    step1.classList.remove('active');
+    step1.classList.add('exit-left');
+    
+    step2.classList.add('active');
+    
+    let count = 10;
+    countdownNumber.textContent = count;
+    
+    countdownInterval = setInterval(() => {
+      count--;
+      countdownNumber.textContent = count;
+      
+      if(count <= 0) {
+        clearInterval(countdownInterval);
+        showSuccess();
+      }
+    }, 1000); // 1 second intervals
+  });
+
+  // Show Success Screen
+  function showSuccess() {
+    step2.classList.remove('active');
+    step2.classList.add('exit-left');
+    
+    step3.classList.add('active');
+  }
+
+  // Reset Flow
+  function resetSosFlow() {
+    clearInterval(countdownInterval);
+    
+    // Remove active and exit states
+    step1.classList.remove('active', 'exit-left');
+    step2.classList.remove('active', 'exit-left');
+    step3.classList.remove('active', 'exit-left');
+    
+    // Force step 1 to be active again
+    step1.classList.add('active');
+  }
+
+  sosModalReset.addEventListener('click', resetSosFlow);
+
+
+  // ═══ NEW PILL NAV SLIDER LOGIC ═══
+  const navItems = document.querySelectorAll('.nav-item');
+  const navSlider = document.getElementById('nav-slider');
+  const navWrapper = document.getElementById('nav-wrapper');
+  const defaultActive = document.querySelector('.nav-item.default-active');
+
+  function moveSliderTo(item) {
+    if (!item || !navWrapper) return;
+    if (window.matchMedia && window.matchMedia('(max-width:600px)').matches) {
+      navItems.forEach(nav => nav.classList.remove('active-text'));
+      item.classList.add('active-text');
+      if (navSlider) { navSlider.style.width = ''; navSlider.style.left = ''; }
+      return;
+    }
+
+    if(!navSlider) return;
+    const itemRect = item.getBoundingClientRect();
+    const wrapperRect = navWrapper.getBoundingClientRect();
+
+    navSlider.style.width = `${itemRect.width}px`;
+    navSlider.style.left = `${itemRect.left - wrapperRect.left}px`;
+
+    navItems.forEach(nav => nav.classList.remove('active-text'));
+    item.classList.add('active-text');
+  }
+
+  if(defaultActive) moveSliderTo(defaultActive);
+
+  window.addEventListener('resize', () => {
+    if (defaultActive) moveSliderTo(defaultActive);
+  });
+
+  navItems.forEach(item => {
+    item.addEventListener('mouseenter', () => moveSliderTo(item));
+  });
+
+  if(navWrapper) {
+    navWrapper.addEventListener('mouseleave', () => {
+      if(defaultActive) moveSliderTo(defaultActive);
+    });
+  }
+
+  // Scroll reveal
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 55);
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.10, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal, .interactive-sos-trigger').forEach(el => revealObs.observe(el));
+
+  // Count up
+  function countUp(el, target, duration = 1600) {
+    const start = performance.now();
+    const fmt = new Intl.NumberFormat();
+    const tick = now => {
+      const p = Math.min((now - start) / duration, 1);
+      el.textContent = fmt.format(Math.round((1 - Math.pow(1 - p, 4)) * target));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  const countObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { countUp(e.target, +e.target.dataset.count); countObs.unobserve(e.target); }});
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
+
+  // Carousel
+  const track = document.getElementById('carouselTrack');
+  const dotsContainer = document.getElementById('carouselDots');
+  const cards = Array.from(track.querySelectorAll('.testimonial-card'));
+  let idx = 0;
+  const getVis = () => window.innerWidth <= 900 ? 1 : 3;
+
+  function buildDots() {
+    dotsContainer.innerHTML = '';
+    const total = Math.ceil(cards.length / getVis());
+    for (let i = 0; i < total; i++) {
+      const d = document.createElement('button');
+      d.className = 'c-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', `Go to group ${i + 1}`);
+      d.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(d);
+    }
+  }
+  function goTo(n) {
+    const vis = getVis();
+    idx = Math.max(0, Math.min(n, Math.ceil(cards.length / vis) - 1));
+    track.style.transform = `translateX(-${idx * vis * (cards[0].offsetWidth + 20)}px)`;
+    dotsContainer.querySelectorAll('.c-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+  document.getElementById('prevBtn').addEventListener('click', () => goTo(idx - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => goTo(idx + 1));
+  buildDots();
+  window.addEventListener('resize', () => { buildDots(); goTo(0); });
+  let tx = 0;
+  track.addEventListener('touchstart', e => tx = e.touches[0].clientX, { passive: true });
+  track.addEventListener('touchend', e => { const d = tx - e.changedTouches[0].clientX; if (Math.abs(d) > 40) goTo(idx + (d > 0 ? 1 : -1)); }, { passive: true });
+</script>
+</body>
+</html>

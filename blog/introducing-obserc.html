@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introducing Obserc: The Personal Safety App Built Around Your Circle</title>
+  <meta name="description" content="Meet Obserc, the iOS safety app that replaces reactive panic buttons with a proactive safety net built around the people you trust most." />
+  <link rel="canonical" href="https://obserc.com/blog/introducing-obserc.html" />
+  <link rel="icon" type="image/svg+xml" href="../obserc-favicon.svg" />
+  <link rel="icon" type="image/png" href="../obserc-logo.png" sizes="32x32" />
+  <meta property="og:title" content="Introducing Obserc: The Personal Safety App Built Around Your Circle" />
+  <meta property="og:description" content="Meet Obserc, the iOS safety app replacing reactive panic buttons with a proactive safety net built around people you trust." />
+  <meta property="og:url" content="https://obserc.com/blog/introducing-obserc.html" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .article-hero { padding-top: calc(var(--nav-h) + 80px); padding-bottom: 60px; text-align: center; max-width: 800px; margin: 0 auto; }
+    .article-meta { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+    .article-category { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); border: 1px solid rgba(59,130,246,0.2); padding: 4px 12px; border-radius: 100px; }
+    .article-meta-dot { width: 3px; height: 3px; background: var(--border-strong); border-radius: 50%; }
+    .article-meta-text { font-size: 13px; color: var(--muted); font-weight: 500; }
+    .article-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 48px); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; color: var(--text); margin-bottom: 20px; }
+    .article-subtitle { font-size: var(--text-lg); color: var(--muted); line-height: 1.65; }
+    .article-divider { width: 60px; height: 3px; background: var(--accent); border-radius: 2px; margin: 40px auto; }
+    .article-body { max-width: 720px; margin: 0 auto; padding-bottom: 80px; }
+    .article-body h2 { font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--text); margin: 44px 0 16px; letter-spacing: -0.5px; }
+    .article-body p { font-size: 17px; color: #374151; line-height: 1.8; margin-bottom: 20px; }
+    .article-body ul { margin: 0 0 20px 0; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .article-body ul li { font-size: 16px; color: #374151; line-height: 1.7; padding-left: 24px; position: relative; }
+    .article-body ul li::before { content: ''; position: absolute; left: 0; top: 11px; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+    .article-body strong { color: var(--text); font-weight: 700; }
+    .pullquote { background: var(--accent-light); border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 24px 28px; margin: 36px 0; }
+    .pullquote p { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--accent-dark); line-height: 1.5; margin: 0; letter-spacing: -0.3px; }
+    .article-cta { background: var(--navy); border-radius: var(--radius-lg); padding: 40px 36px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-top: 56px; }
+    .article-cta-text p.section-label { color: rgba(255,255,255,0.45); margin-bottom: 8px; }
+    .article-cta-text h3 { font-family: var(--font-display); font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px; letter-spacing: -0.5px; }
+    .article-cta-text p.desc { font-size: 14px; color: rgba(255,255,255,0.5); margin: 0; line-height: 1.6; }
+    .article-cta .btn-white { flex-shrink: 0; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: 40px; transition: gap 0.2s; }
+    .back-link:hover { gap: 10px; }
+    @media (max-width: 600px) { .article-hero { padding-top: calc(var(--nav-h) + 60px); } .article-cta { flex-direction: column; } .article-cta .btn-white { width: 100%; justify-content: center; } }
+  </style>
+</head>
+<body>
+<nav class="pill-nav" role="navigation" aria-label="Main navigation">
+  <a href="/" class="nav-logo-circle" aria-label="Obserc home">
+    <img src="../obserc-favicon.svg" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="eager" />
+    <span class="nav-logo-fallback" style="display:none;" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg></span>
+  </a>
+  <div class="nav-menu-wrapper" id="nav-wrapper">
+    <div class="nav-slider" id="nav-slider"></div>
+    <a href="/" class="nav-item">Home</a>
+    <a href="../guides.html" class="nav-item">Guides</a>
+    <a href="../features.html" class="nav-item">Features</a>
+    <a href="../support.html" class="nav-item">Support</a>
+    <a href="index.html" class="nav-item default-active">Blog</a>
+    <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="nav-item" target="_blank" rel="noopener noreferrer">Get Started</a>
+  </div>
+</nav>
+<div class="container">
+  <div class="article-hero">
+    <div class="article-meta">
+      <span class="article-category">About</span>
+      <span class="article-meta-dot"></span>
+      <span class="article-meta-text">March 29, 2026</span>
+      <span class="article-meta-dot"></span>
+      <span class="article-meta-text">3 min read</span>
+    </div>
+    <h1 class="article-title">Introducing Obserc: The Personal Safety App Built Around Your Circle</h1>
+    <p class="article-subtitle">Personal safety shouldn’t mean a panic button buried inside your phone. We built something different, a quiet, proactive safety net that lives around the people you already trust.</p>
+  </div>
+  <div class="article-divider" aria-hidden="true"></div>
+  <article class="article-body">
+    <a href="index.html" class="back-link" aria-label="Back to blog">← Back to Blog</a>
+    <p>Every few years, a technology comes along that should have existed sooner. Personal safety apps have long promised to keep people safe, but too often they rely on the same tired pattern: something goes wrong, you tap an emergency button, help arrives. Reactive. Clumsy. Too late.</p>
+    <p>Obserc is built on a different premise: <strong>safety works best when it’s quietly ongoing, not switched on in a panic.</strong> We built an iOS app that keeps you and the people you care about connected before anything goes wrong, through a concept we call Circles.</p>
+    <h2>What Is a Circle?</h2>
+    <p>At the heart of Obserc is the Circle, a private group of trusted contacts who share real-time safety awareness with each other. Think of it less like a group chat and more like a quiet understanding: the people in your circle are always gently aware of where you are and whether you’re okay, without anyone needing to constantly message each other.</p>
+    <p>Circles are intentionally intimate. You don’t add hundreds of followers, you add the people who would genuinely want to know if something felt off. Your closest friends. Your family. Your flatmates. The five people who matter most.</p>
+    <div class="pullquote"><p>“Safety works best when it’s quietly ongoing, not switched on in a panic.”</p></div>
+    <h2>The Problem We’re Solving</h2>
+    <p>Most safety apps suffer from the same fundamental flaw: they only activate when you’re already scared. By then, you may not have the time or presence of mind to navigate a complicated interface. And for everyday situations, driving home alone, heading to a party, walking back late, they offer nothing at all.</p>
+    <p>Meanwhile, the people who love you are left guessing. Did she get home okay? Is he still at that bar? They only find out if something goes wrong and someone makes a call.</p>
+    <p>Obserc closes that gap. It runs quietly in the background, sharing just enough awareness with your Circle so that nobody is left guessing, and escalating instantly when you need it to.</p>
+    <h2>Key Features at a Glance</h2>
+    <ul>
+      <li><strong>Circles</strong>, Build your private safety network of trusted contacts who share live awareness.</li>
+      <li><strong>Status Tab</strong>, The home base for check-ins, nudges, and knowing your circle’s current state.</li>
+      <li><strong>Night Out Mode</strong>, A full suite of nightlife safety tools: squad monitoring, the Wingman system, I Feel Off button, Safety Call, SOS Beacon, and a Morning After Report.</li>
+      <li><strong>Obserc Drive</strong>, Automatic journey monitoring that alerts your circle when you arrive safely, with a Live Drive Card, Drive Score, and Drive SOS, all completely private from insurers.</li>
+      <li><strong>Circle Map</strong>, Real-time location sharing with Ghost Mode for moments when you need total privacy.</li>
+      <li><strong>SOS Beacon</strong>, Tap for a standard alert to your Circle; hold for 3 seconds to trigger a Critical SOS to all emergency contacts with your live location.</li>
+    </ul>
+    <h2>Who Obserc Is For</h2>
+    <p>Obserc was built for anyone who has ever felt the low-level anxiety of being alone in an unfamiliar place, and for anyone who has ever stayed up waiting for a message that someone got home okay. That’s students heading home from nights out, parents whose kids have just started driving, friends who split up at a festival, and commuters travelling late.</p>
+    <p>Safety isn’t a demographic. It’s a human need. Obserc is free to download and available now on the iOS App Store. Your circle is waiting.</p>
+    <div class="article-cta">
+      <div class="article-cta-text">
+        <p class="section-label">Free on the App Store</p>
+        <h3>Download Obserc today</h3>
+        <p class="desc">Join thousands of people already protecting their circles. No subscription required to get started.</p>
+      </div>
+      <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="btn-white" target="_blank" rel="noopener noreferrer" aria-label="Download Obserc on the App Store">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Download Now
+      </a>
+    </div>
+  </article>
+</div>
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="../obserc-logo.png" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="lazy" />
+          <span class="footer-logo-fallback" style="display:none;" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg></span>
+          Obserc
+        </div>
+        <p class="footer-tagline">Your world. Shared &amp; Secured. Personal safety for you and everyone you care about.</p>
+      </div>
+      <nav aria-label="Product links"><h4>Product</h4><ul class="footer-links"><li><a href="../features.html">Features</a></li><li><a href="../guides.html">Guides</a></li><li><a href="index.html">Blog</a></li><li><a href="https://apps.apple.com/ca/app/obserc/id6759740570" target="_blank" rel="noopener noreferrer">App Store</a></li></ul></nav>
+      <nav aria-label="Support links"><h4>Support</h4><ul class="footer-links"><li><a href="../support.html">Contact Us</a></li><li><a href="../faq.html">FAQ</a></li><li><a href="mailto:support@obserc.com">support@obserc.com</a></li></ul></nav>
+      <nav aria-label="Legal links"><h4>Legal</h4><ul class="footer-links"><li><a href="../privacy.html">Privacy Policy</a></li><li><a href="../terms.html">Terms of Service</a></li></ul></nav>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year">2026</span> Obserc. All rights reserved.</p>
+      <div class="footer-socials" aria-label="Social links">
+        <a href="https://devpost.com/software/obserc" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Obserc on Devpost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg></a>
+        <a href="mailto:support@obserc.com" class="social-btn" aria-label="Email Obserc support"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  const navItems = document.querySelectorAll('.nav-item');
+  const navSlider = document.getElementById('nav-slider');
+  const navWrapper = document.getElementById('nav-wrapper');
+  const defaultActive = document.querySelector('.nav-item.default-active');
+  function moveSliderTo(item) {
+    if (!item || !navWrapper) return;
+    if (window.matchMedia && window.matchMedia('(max-width:600px)').matches) {
+      navItems.forEach(nav => nav.classList.remove('active-text'));
+      item.classList.add('active-text');
+      if (navSlider) { navSlider.style.width = ''; navSlider.style.left = ''; }
+      return;
+    }
+    if(!navSlider) return;
+    const itemRect = item.getBoundingClientRect();
+    const wrapperRect = navWrapper.getBoundingClientRect();
+    navSlider.style.width = `${itemRect.width}px`;
+    navSlider.style.left = `${itemRect.left - wrapperRect.left}px`;
+    navItems.forEach(nav => nav.classList.remove('active-text'));
+    item.classList.add('active-text');
+  }
+  if(defaultActive) moveSliderTo(defaultActive);
+  window.addEventListener('resize', () => { if (defaultActive) moveSliderTo(defaultActive); });
+  navItems.forEach(item => { item.addEventListener('mouseenter', () => moveSliderTo(item)); });
+  if(navWrapper) { navWrapper.addEventListener('mouseleave', () => { if(defaultActive) moveSliderTo(defaultActive); }); }
+</script>
+</body>
+</html>

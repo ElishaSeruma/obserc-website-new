@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Features | Obserc Your World. Shared & Secured.</title>
+  <meta name="description" content="Explore Obserc's powerful personal safety features including SOS Beacons, Night Out Mode, Drive Mode, and real-time Circle Maps." />
+    <link rel="icon" type="image/svg+xml" href="obserc-favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ═══ SCROLL ANIMATIONS ═══ */
+    .reveal-up { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    
+    .reveal-up.is-visible, .reveal-left.is-visible, .reveal-right.is-visible {
+      opacity: 1; transform: translate(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+    /* ═══ ZIG-ZAG FEATURE LAYOUT ═══ */
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      padding: 120px 0;
+    }
+    .feature-row.reverse {
+      direction: rtl;
+    }
+    .feature-row.reverse > * {
+      direction: ltr;
+    }
+    .feature-content {
+      max-width: 480px;
+    }
+    .feature-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-light);
+      padding: 6px 14px; border-radius: 100px; margin-bottom: 24px;
+    }
+    .feature-tag.yellow { color: var(--yellow); background: var(--yellow-light); }
+    .feature-tag.red { color: var(--red); background: var(--red-light); }
+    .feature-tag.green { color: var(--green); background: var(--green-light); }
+
+    .feature-title {
+      font-family: var(--font-display); font-size: 40px; font-weight: 800;
+      line-height: 1.1; letter-spacing: -1px; color: var(--text); margin-bottom: 20px;
+    }
+    .feature-desc {
+      font-size: 18px; color: var(--muted); line-height: 1.6; margin-bottom: 32px;
+    }
+    
+    .feature-list {
+      list-style: none; display: flex; flex-direction: column; gap: 16px;
+    }
+    .feature-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .list-icon {
+      width: 24px; height: 24px; background: var(--surface-2); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      margin-top: 2px; color: var(--accent); font-size: 12px;
+    }
+    .list-text strong { color: var(--text); display: block; font-size: 16px; margin-bottom: 2px; }
+    .list-text span { color: var(--muted); font-size: 14px; line-height: 1.5; display: block; }
+
+    .feature-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    .feature-visual img {
+      max-width: 280px;
+      border-radius: 32px;
+      box-shadow: var(--shadow-phone);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* ═══ EXPANDED NIGHT OUT SECTION ═══ */
+    .nightout-showcase {
+      background: var(--navy);
+      padding: 140px 0;
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+    .nightout-showcase::before {
+      content: ''; position: absolute; top: -20%; left: -10%; width: 50%; height: 50%;
+      background: radial-gradient(circle, rgba(245, 166, 35, 0.15) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .nightout-header { text-align: center; max-width: 640px; margin: 0 auto 80px; }
+    .nightout-title { font-family: var(--font-display); font-size: 48px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+    .nightout-desc { font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+    
+    .nightout-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+    }
+    .nightout-cards {
+      display: grid; grid-template-columns: 1fr; gap: 20px;
+    }
+    .no-card {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg); padding: 32px;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .no-card:hover { transform: translateX(10px); background: rgba(255,255,255,0.08); }
+    .no-card-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
+    .no-card-desc { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+    .nightout-visual-stack {
+      position: relative; height: 600px; display: flex; justify-content: center; align-items: center;
+    }
+    .no-img-main {
+      width: 260px; border-radius: 32px; box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+      position: relative; z-index: 3;
+    }
+    .no-img-float-1 {
+      position: absolute; width: 180px; border-radius: 24px; z-index: 2;
+      top: 50px; left: -20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      animation: floatLeft 7s ease-in-out infinite; opacity: 0.8;
+    }
+    .no-img-float-2 {
+      position: absolute; width: 180px; border-radius: 24px; z-index: 4;
+      bottom: 60px; right: -20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      animation: floatRight 6s ease-in-out infinite;
+    }
+
+    /* ═══ SOS STACK ═══ */
+    .sos-img-stack { position: relative; }
+    .sos-img-stack img:nth-child(1) { width: 220px; position: relative; z-index: 2; border-radius: 32px; }
+    .sos-img-stack img:nth-child(2) { width: 220px; position: absolute; top: 40px; right: -40px; z-index: 1; opacity: 0.6; border-radius: 32px; transform: scale(0.9); }
+
+    @media (max-width: 900px) {
+      .feature-row { grid-template-columns: 1fr; gap: 40px; padding: 60px 0; text-align: center; }
+      .feature-row.reverse { direction: ltr; }
+      .feature-content { margin: 0 auto; }
+      .feature-list li { flex-direction: column; align-items: center; text-align: center; }
+      .nightout-grid { grid-template-columns: 1fr; gap: 60px; }
+      .no-card:hover { transform: translateY(-5px); }
+      .nightout-visual-stack { height: 450px; }
+      .no-img-float-1 { left: 0; }
+      .no-img-float-2 { right: 0; }
+      .sos-img-stack img:nth-child(2) { right: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="pill-nav" role="navigation" aria-label="Main navigation">
+  <a href="/" class="nav-logo-circle" aria-label="Obserc home">
+    <img src="obserc-favicon.svg" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="eager" />
+    <span class="nav-logo-fallback" style="display:none;" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg>
+    </span>
+  </a>
+  
+  <div class="nav-menu-wrapper" id="nav-wrapper">
+    <div class="nav-slider" id="nav-slider"></div>
+    <a href="/" class="nav-item">Home</a>
+    <a href="/guides.html" class="nav-item">Guides</a>
+    <a href="/features.html" class="nav-item active-text default-active">Features</a>
+    <a href="/support.html" class="nav-item">Support</a>
+    <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="nav-item" target="_blank" rel="noopener noreferrer">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero" aria-label="Features Hero" style="padding-bottom: 20px;">
+  <div class="container">
+    <div class="stagger" style="display:flex;flex-direction:column;align-items:center;">
+      <div class="hero-badge"><span class="dot" aria-hidden="true"></span>Platform Deep Dive</div>
+      <h1>
+        <span class="hero-line-sans">Features for</span>
+        <span class="hero-line-serif"><span>Quiet protection.</span></span>
+      </h1>
+      <p class="hero-sub" style="max-width: 580px;">Scroll down to see how Obserc creates a live safety net around you, keeping you connected to your circle before anything even happens.</p>
+    </div>
+  </div>
+</section>
+
+<section style="overflow: hidden;">
+  <div class="container">
+    <div class="feature-row">
+      <div class="feature-content reveal-left">
+        <span class="feature-tag">Home Base</span>
+        <h2 class="feature-title">Your Circle &amp; Status Tab</h2>
+        <p class="feature-desc">Build private groups of trusted people who share safety awareness without the noise of a crowded group chat.</p>
+        <ul class="feature-list">
+          <li>
+            <div class="list-icon">✓</div>
+            <div class="list-text"><strong>Multiple Circles</strong><span>Create distinct groups for family, flatmates, and different friend groups so you only share what you want, with who you want.</span></div>
+          </li>
+          <li>
+            <div class="list-icon">✓</div>
+            <div class="list-text"><strong>Smart Check-ins</strong><span>Send and receive quick nudges to ensure everyone arrived safely without sending "did you make it?" texts.</span></div>
+          </li>
+          <li>
+            <div class="list-icon">✓</div>
+            <div class="list-text"><strong>Safe Places</strong><span>Get automatic notifications when circle members arrive at saved locations like 'Home' or 'Campus'.</span></div>
+          </li>
+        </ul>
+      </div>
+      <div class="feature-visual reveal-right">
+        <img src="homescreen.png" alt="Obserc Home Screen" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: var(--surface); overflow: hidden;">
+  <div class="container">
+    <div class="feature-row reverse">
+      <div class="feature-content reveal-right">
+        <span class="feature-tag green">Real-Time Sync</span>
+        <h2 class="feature-title">Live Circle Map</h2>
+        <p class="feature-desc">Stay aware of exactly where your people are when they need you to know. Total visibility, with total privacy controls.</p>
+        <ul class="feature-list">
+          <li>
+            <div class="list-icon" style="color:var(--green); background:var(--green-light);">📌</div>
+            <div class="list-text"><strong>Live Tracking</strong><span>Pinpoint accuracy when a member is on the move, feeling unsafe, or walking home late at night.</span></div>
+          </li>
+          <li>
+            <div class="list-icon" style="color:var(--green); background:var(--green-light);">📍</div>
+            <div class="list-text"><strong>Meet Me Pins</strong><span>Drop a temporary pin on the map to easily coordinate a meetup spot with your circle.</span></div>
+          </li>
+          <li>
+            <div class="list-icon" style="color:var(--green); background:var(--green-light);">👻</div>
+            <div class="list-text"><strong>Ghost Mode</strong><span>You are always in control. Go off the grid temporarily with one tap, no questions asked.</span></div>
+          </li>
+        </ul>
+      </div>
+      <div class="feature-visual reveal-left">
+        <img src="circlescreen.png" alt="Obserc Circle Map" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="nightout-showcase" id="night-out">
+  <div class="container">
+    <div class="nightout-header reveal-up">
+      <span class="feature-tag yellow" style="background: rgba(245, 166, 35, 0.15); border: 1px solid rgba(245, 166, 35, 0.3);">Ultimate Nightlife Protection</span>
+      <h2 class="nightout-title">Night Out Mode</h2>
+      <p class="nightout-desc">When the music's loud and plans change fast, Night Out Mode keeps everyone aligned, visible, and protected without killing the vibe. It’s the ultimate digital wingman.</p>
+    </div>
+
+    <div class="nightout-grid">
+      <div class="nightout-visual-stack reveal-left">
+        <img src="nightoutscreen.png" alt="Night Out Background" class="no-img-float-1" style="filter: brightness(0.5) blur(2px);" />
+        <img src="nightoutscreen.png" alt="Night Out Main Screen" class="no-img-main" />
+        <img src="nightoutscreen.png" alt="Night Out Background 2" class="no-img-float-2" style="filter: brightness(0.8);" />
+      </div>
+
+      <div class="nightout-cards reveal-right delay-1">
+        <div class="no-card">
+          <h3 class="no-card-title"><span style="font-size:24px;">📡</span> Find My Squad</h3>
+          <p class="no-card-desc">Activate a live radar to find exactly where your friends are in real-time. Never lose your group in a crowded club, bar, or festival again.</p>
+        </div>
+        <div class="no-card">
+          <h3 class="no-card-title"><span style="font-size:24px;">👀</span> I Feel Off Button</h3>
+          <p class="no-card-desc">Not feeling great about a situation? Tap "I Feel Off" to silently alert your active circle that you might need intervention or help soon.</p>
+        </div>
+        <div class="no-card">
+          <h3 class="no-card-title"><span style="font-size:24px;">📞</span> Safety Call</h3>
+          <p class="no-card-desc">Get out of an awkward or unsafe conversation. One tap triggers a fake phone call to your device, or instantly dials your designated wingman.</p>
+        </div>
+        <div class="no-card">
+          <h3 class="no-card-title"><span style="font-size:24px;">🌅</span> Morning After Reports</h3>
+          <p class="no-card-desc">Wake up to a secure, private summary of your night. See the timeline of where you went, when you left, and who was with you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="overflow: hidden;">
+  <div class="container">
+    <div class="feature-row">
+      <div class="feature-content reveal-left">
+        <span class="feature-tag red">Emergency Response</span>
+        <h2 class="feature-title">Your Personal SOS Beacon</h2>
+        <p class="feature-desc">Instantly share your live location and an emergency alert with the people you trust most, right when you need them.</p>
+        <ul class="feature-list">
+          <li>
+            <div class="list-icon" style="color:var(--red); background:var(--red-light);">🚨</div>
+            <div class="list-text"><strong>Standard SOS (Tap)</strong><span>A single tap sends an immediate, silent alert to your active circle with your exact coordinates.</span></div>
+          </li>
+          <li>
+            <div class="list-icon" style="color:var(--red); background:var(--red-light);">⚠️</div>
+            <div class="list-text"><strong>Critical SOS (Hold 3s)</strong><span>Hold the button to escalate. This bypasses Do Not Disturb and alerts all your designated emergency contacts instantly.</span></div>
+          </li>
+          <li>
+            <div class="list-icon" style="color:var(--red); background:var(--red-light);">⏱️</div>
+            <div class="list-text"><strong>10-Second Cancel Window</strong><span>Accidents happen. If you trigger an SOS by mistake, you have 10 seconds to slide to cancel before any alerts are dispatched.</span></div>
+          </li>
+        </ul>
+      </div>
+      <div class="feature-visual sos-img-stack reveal-right">
+        <img src="sosbeaconscreen.png" alt="SOS Beacon Active" />
+        <img src="criticalsosoverlay.png" alt="Critical SOS Override" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: var(--surface); padding: 120px 0; overflow: hidden;">
+  <div class="container">
+    <div class="reveal-up" style="text-align: center; max-width: 600px; margin: 0 auto 60px;">
+      <span class="feature-tag">Daily Habits</span>
+      <h2 class="feature-title">More than just emergencies.</h2>
+      <p class="feature-desc">Safety isn't just for scary moments. It's about building consistent habits that give your loved ones peace of mind every single day.</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px;">
+      <div class="reveal-left" style="background: var(--bg); border: 1px solid var(--border); padding: 40px; border-radius: var(--radius-lg); text-align: center;">
+        <div class="feature-icon-large bg-blue" style="margin: 0 auto 24px;">🚗</div>
+        <h3 style="font-family: var(--font-display); font-size: 24px; margin-bottom: 12px; font-weight: 700;">Obserc Drive</h3>
+        <p style="color: var(--muted); line-height: 1.6;">Monitors your drive and automatically notifies your circle when you arrive safely. It tracks hard braking and includes a specific Drive SOS layout, all without sharing data with insurers.</p>
+      </div>
+      <div class="reveal-right" style="background: var(--bg); border: 1px solid var(--border); padding: 40px; border-radius: var(--radius-lg); text-align: center;">
+        <div class="feature-icon-large bg-yellow" style="margin: 0 auto 24px;">🔥</div>
+        <h3 style="font-family: var(--font-display); font-size: 24px; margin-bottom: 12px; font-weight: 700;">Daily Streaks</h3>
+        <p style="color: var(--muted); line-height: 1.6;">Open Obserc daily to build your streak. Move from Firewood (0-2 days) all the way up to Phoenix (14+ days). It turns checking in from a chore into a rewarding daily habit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" aria-labelledby="cta-heading" style="padding: 100px 0;">
+  <div class="container">
+    <div class="cta-inner reveal-up">
+      <div class="cta-glow cta-glow-1" aria-hidden="true"></div>
+      <div class="cta-glow cta-glow-2" aria-hidden="true"></div>
+      <div style="position:relative;z-index:1;">
+        <p class="section-label" style="color:rgba(255,255,255,0.4);">Ready to get started?</p>
+        <h2 class="section-heading" id="cta-heading" style="color:#fff;">Start protecting<br/>your circle today.</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,0.55);margin:0 auto 40px;">Get Obserc on the App Store. Experience all these features to keep your inner circle safe.</p>
+        <div class="cta-actions">
+          <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="btn-white" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Download Now
+          </a>
+          <a href="/guides.html" class="btn-ghost">Read User Guides</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="obserc-logo.png" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="lazy" />
+          <span class="footer-logo-fallback" style="display:none;" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg></span>
+          Obserc
+        </div>
+        <p class="footer-tagline">Your world. Shared &amp; Secured. Personal safety for you and everyone you care about.</p>
+      </div>
+      <nav aria-label="Product links"><h4>Product</h4>
+        <ul class="footer-links">
+          <li><a href="/features.html">Features</a></li>
+          <li><a href="/guides.html">Guides</a></li>
+          <li><a href="/location-usage.html">Location Usage</a></li>
+          <li><a href="https://apps.apple.com/ca/app/obserc/id6759740570" target="_blank" rel="noopener noreferrer">App Store</a></li>
+          <li><a href="https://devpost.com/software/obserc" target="_blank" rel="noopener noreferrer">Devpost</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Support links"><h4>Support</h4>
+        <ul class="footer-links">
+          <li><a href="/support.html">Contact Us</a></li>
+          <li><a href="/faq.html">FAQ</a></li>
+          <li><a href="mailto:support@obserc.com">support@obserc.com</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Legal links"><h4>Legal</h4>
+        <ul class="footer-links">
+          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms of Service</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year">2026</span> Obserc. All rights reserved.</p>
+      <div class="footer-socials" aria-label="Social links">
+        <a href="https://devpost.com/software/obserc" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Obserc on Devpost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg></a>
+        <a href="mailto:support@obserc.com" class="social-btn" aria-label="Email Obserc support"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Pill Nav Slider Logic
+  const navItems = document.querySelectorAll('.nav-item');
+  const navSlider = document.getElementById('nav-slider');
+  const navWrapper = document.getElementById('nav-wrapper');
+  const defaultActive = document.querySelector('.nav-item.default-active');
+
+  function moveSliderTo(item) {
+    if (!item || !navWrapper) return;
+    if (window.matchMedia && window.matchMedia('(max-width:600px)').matches) {
+      navItems.forEach(nav => nav.classList.remove('active-text'));
+      item.classList.add('active-text');
+      if (navSlider) { navSlider.style.width = ''; navSlider.style.left = ''; }
+      return;
+    }
+    if(!navSlider) return;
+    const itemRect = item.getBoundingClientRect();
+    const wrapperRect = navWrapper.getBoundingClientRect();
+
+    navSlider.style.width = `${itemRect.width}px`;
+    navSlider.style.left = `${itemRect.left - wrapperRect.left}px`;
+
+    navItems.forEach(nav => nav.classList.remove('active-text'));
+    item.classList.add('active-text');
+  }
+
+  if(defaultActive) moveSliderTo(defaultActive);
+  window.addEventListener('resize', () => { if (defaultActive) moveSliderTo(defaultActive); });
+
+  navItems.forEach(item => {
+    item.addEventListener('mouseenter', () => moveSliderTo(item));
+  });
+
+  if(navWrapper) {
+    navWrapper.addEventListener('mouseleave', () => {
+      if(defaultActive) moveSliderTo(defaultActive);
+    });
+  }
+
+  // ═══ SCROLL ANIMATIONS OBSERVER ═══
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        // Optional: stop observing once revealed
+        scrollObserver.unobserve(entry.target);
+      }
+    });
+  }, { 
+    threshold: 0.15, rootMargin: '0px 0px -50px 0px' 
+  });
+
+  document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right').forEach(el => {
+    scrollObserver.observe(el);
+  });
+</script>
+</body>
+</html>

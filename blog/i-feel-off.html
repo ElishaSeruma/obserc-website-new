@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The I Feel Off Button: Why Obserc Built a Feature for Gut Feelings</title>
+  <meta name="description" content="Obserc's I Feel Off button lets you alert your Circle when something feels wrong, before you can explain it. Here's the psychology behind it." />
+  <link rel="canonical" href="https://obserc.com/blog/i-feel-off.html" />
+  <link rel="icon" type="image/svg+xml" href="../obserc-favicon.svg" />
+  <link rel="icon" type="image/png" href="../obserc-logo.png" sizes="32x32" />
+  <meta property="og:title" content="The I Feel Off Button: Why Obserc Built a Feature for Gut Feelings" />
+  <meta property="og:description" content="Gut feelings are valid safety signals. Obserc's I Feel Off button is built to act on them instantly." />
+  <meta property="og:url" content="https://obserc.com/blog/i-feel-off.html" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .article-hero{padding-top:calc(var(--nav-h) + 80px);padding-bottom:60px;text-align:center;max-width:800px;margin:0 auto}
+    .article-meta{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px;flex-wrap:wrap}
+    .article-category{display:inline-flex;align-items:center;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border:1px solid rgba(59,130,246,0.2);padding:4px 12px;border-radius:100px}
+    .article-meta-dot{width:3px;height:3px;background:var(--border-strong);border-radius:50%}
+    .article-meta-text{font-size:13px;color:var(--muted);font-weight:500}
+    .article-title{font-family:var(--font-display);font-size:clamp(28px,4vw,48px);font-weight:800;line-height:1.1;letter-spacing:-1.5px;color:var(--text);margin-bottom:20px}
+    .article-subtitle{font-size:var(--text-lg);color:var(--muted);line-height:1.65}
+    .article-divider{width:60px;height:3px;background:var(--accent);border-radius:2px;margin:40px auto}
+    .article-body{max-width:720px;margin:0 auto;padding-bottom:80px}
+    .article-body h2{font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--text);margin:44px 0 16px;letter-spacing:-0.5px}
+    .article-body p{font-size:17px;color:#374151;line-height:1.8;margin-bottom:20px}
+    .article-body ul{margin:0 0 20px 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+    .article-body ul li{font-size:16px;color:#374151;line-height:1.7;padding-left:24px;position:relative}
+    .article-body ul li::before{content:'';position:absolute;left:0;top:11px;width:8px;height:8px;background:var(--accent);border-radius:50%}
+    .article-body strong{color:var(--text);font-weight:700}
+    .pullquote{background:var(--accent-light);border-left:4px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:24px 28px;margin:36px 0}
+    .pullquote p{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--accent-dark);line-height:1.5;margin:0;letter-spacing:-0.3px}
+    .article-cta{background:var(--navy);border-radius:var(--radius-lg);padding:40px 36px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:56px}
+    .article-cta-text p.section-label{color:rgba(255,255,255,0.45);margin-bottom:8px}
+    .article-cta-text h3{font-family:var(--font-display);font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;letter-spacing:-0.5px}
+    .article-cta-text p.desc{font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6}
+    .article-cta .btn-white{flex-shrink:0}
+    .back-link{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--accent);margin-bottom:40px;transition:gap 0.2s}
+    .back-link:hover{gap:10px}
+    @media(max-width:600px){.article-hero{padding-top:calc(var(--nav-h) + 60px)}.article-cta{flex-direction:column}.article-cta .btn-white{width:100%;justify-content:center}}
+  </style>
+</head>
+<body>
+  <nav class="pill-nav" role="navigation" aria-label="Main navigation">
+    <a href="/" class="nav-logo-circle" aria-label="Obserc home">
+      <img src="../obserc-favicon.svg" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="eager" />
+      <span class="nav-logo-fallback" style="display:none;" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg></span>
+    </a>
+    <div class="nav-menu-wrapper" id="nav-wrapper">
+      <div class="nav-slider" id="nav-slider"></div>
+      <a href="/" class="nav-item">Home</a>
+      <a href="../guides.html" class="nav-item">Guides</a>
+      <a href="../features.html" class="nav-item">Features</a>
+      <a href="../support.html" class="nav-item">Support</a>
+      <a href="index.html" class="nav-item default-active">Blog</a>
+      <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="nav-item" target="_blank" rel="noopener noreferrer">Get Started</a>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="article-hero">
+      <div class="article-meta">
+        <span class="article-category">Features</span>
+        <span class="article-meta-dot"></span>
+        <span class="article-meta-text">March 30, 2026</span>
+        <span class="article-meta-dot"></span>
+        <span class="article-meta-text">4 min read</span>
+      </div>
+      <h1 class="article-title">The I Feel Off Button: Why Obserc Built a Feature for Gut Feelings</h1>
+      <p class="article-subtitle">You cannot always explain it. Something just feels wrong. The I Feel Off button was designed for exactly that moment, before panic, before certainty, when instinct is the only thing speaking.</p>
+    </div>
+    <div class="article-divider" aria-hidden="true"></div>
+    <article class="article-body">
+      <a href="index.html" class="back-link" aria-label="Back to blog">Back to Blog</a>
+      <p>Safety research consistently shows that gut instinct is one of the most reliable early warning systems humans have. Long before a situation becomes dangerous, the brain processes dozens of subtle cues, a shift in tone, a change in environment, a person who is a little too close, and registers something as off. The problem is that most safety tools require certainty: you press the SOS when danger is confirmed. But by then, the window to act has often closed.</p>
+      <p>Obserc's I Feel Off button fills that gap. It is a one-tap alert designed for the moment before you know something is wrong, when instinct is the only thing speaking.</p>
+
+      <h2>The Psychology of Gut Feelings in Safety</h2>
+      <p>Gavin de Becker's influential work on personal safety describes intuition as "a sophisticated process of rapid cognition", the brain synthesising environmental data faster than conscious thought can keep up. The feeling of something being off is not irrational. It is the result of your brain doing its job extremely well, just below the level of conscious awareness.</p>
+      <p>The challenge is that people often dismiss these feelings. They do not want to seem paranoid. They do not want to make a scene. They are not sure enough to press an SOS button. This hesitation is exactly what predatory actors, and dangerous situations in general, rely on. The I Feel Off button removes the hesitation problem by giving you a lower-stakes action that still puts your Circle on alert.</p>
+
+      <div class="pullquote"><p>"You do not need to be certain something is wrong to use it. If something feels off, that feeling is enough."</p></div>
+
+      <h2>How It Works</h2>
+      <p>The I Feel Off button lives inside Night Out Mode, accessible in one tap. When you press it, every member of your Circle receives a notification that you have flagged something. The notification is clear but measured, it signals that you are aware and alert, not that you are in immediate danger. Your live location is shared with your Circle at the moment you press it.</p>
+      <p>Your Circle members know what the I Feel Off alert means: keep an eye on your status, be ready to respond, check in if they do not hear from you. It mobilises awareness without triggering panic. If the situation then escalates, you are one more tap away from the SOS Beacon. If it resolves, you can send a follow-up check-in to let your Circle know you are okay.</p>
+
+      <h2>Why It Is Not an Overreaction</h2>
+      <p>One of the most common fears people have about safety features is crying wolf, pressing something unnecessarily and alarming people for nothing. The I Feel Off button is specifically designed to counter this. It is not an emergency signal. It is an awareness signal. Your Circle is not told to call the police or rush to your location. They are told that you are paying attention and that they should be too.</p>
+      <p>False positives with the I Feel Off button are not failures. They are the system working correctly, you felt something, you acted on it, and either nothing happened (good) or something happened and your Circle was already alert (also good). The cost of ignoring a gut feeling is almost always higher than the cost of acting on one.</p>
+
+      <h2>Building Instinct-Responsive Safety Tools</h2>
+      <p>Most safety technology is built around events: a crash is detected, a location is triggered, a button is held. Obserc's I Feel Off button is one of the few safety features built around a feeling. It treats human intuition as valid input data, because it is. By lowering the threshold for action, it makes the entire safety system more effective. The earlier a Circle is alerted, the more options they have. The sooner you act on instinct, the safer you stay.</p>
+
+      <div class="article-cta">
+        <div class="article-cta-text">
+          <p class="section-label">Free on the App Store</p>
+          <h3>Trust your gut. Let Obserc act on it.</h3>
+          <p class="desc">Get Obserc. The I Feel Off button is available inside Night Out Mode.</p>
+        </div>
+        <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="btn-white" target="_blank" rel="noopener noreferrer" aria-label="Download Obserc on the App Store">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          Download Now
+        </a>
+      </div>
+    </article>
+  </div>
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">
+            <img src="../obserc-logo.png" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="lazy" />
+            <span class="footer-logo-fallback" style="display:none;" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg></span>
+            Obserc
+          </div>
+          <p class="footer-tagline">Your world. Shared and Secured. Personal safety for you and everyone you care about.</p>
+        </div>
+        <nav aria-label="Product links"><h4>Product</h4><ul class="footer-links"><li><a href="../features.html">Features</a></li><li><a href="../guides.html">Guides</a></li><li><a href="index.html">Blog</a></li><li><a href="https://apps.apple.com/ca/app/obserc/id6759740570" target="_blank" rel="noopener noreferrer">App Store</a></li></ul></nav>
+        <nav aria-label="Support links"><h4>Support</h4><ul class="footer-links"><li><a href="../support.html">Contact Us</a></li><li><a href="../faq.html">FAQ</a></li><li><a href="mailto:support@obserc.com">support@obserc.com</a></li></ul></nav>
+        <nav aria-label="Legal links"><h4>Legal</h4><ul class="footer-links"><li><a href="../privacy.html">Privacy Policy</a></li><li><a href="../terms.html">Terms of Service</a></li></ul></nav>
+      </div>
+      <div class="footer-bottom">
+        <p>Copyright <span id="year">2026</span> Obserc. All rights reserved.</p>
+        <div class="footer-socials" aria-label="Social links">
+          <a href="https://devpost.com/software/obserc" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Obserc on Devpost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg></a>
+          <a href="mailto:support@obserc.com" class="social-btn" aria-label="Email Obserc support"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const navItems = document.querySelectorAll('.nav-item');
+    const navSlider = document.getElementById('nav-slider');
+    const navWrapper = document.getElementById('nav-wrapper');
+    const defaultActive = document.querySelector('.nav-item.default-active');
+    function moveSliderTo(item) {
+      if (!item || !navWrapper) return;
+      if (window.matchMedia && window.matchMedia('(max-width:600px)').matches) {
+        navItems.forEach(nav => nav.classList.remove('active-text'));
+        item.classList.add('active-text');
+        if (navSlider) { navSlider.style.width = ''; navSlider.style.left = ''; }
+        return;
+      }
+      if(!navSlider) return;
+      const itemRect = item.getBoundingClientRect();
+      const wrapperRect = navWrapper.getBoundingClientRect();
+      navSlider.style.width = itemRect.width + 'px';
+      navSlider.style.left = (itemRect.left - wrapperRect.left) + 'px';
+      navItems.forEach(nav => nav.classList.remove('active-text'));
+      item.classList.add('active-text');
+    }
+    if(defaultActive) moveSliderTo(defaultActive);
+    window.addEventListener('resize', () => { if (defaultActive) moveSliderTo(defaultActive); });
+    navItems.forEach(item => { item.addEventListener('mouseenter', () => moveSliderTo(item)); });
+    if(navWrapper) { navWrapper.addEventListener('mouseleave', () => { if(defaultActive) moveSliderTo(defaultActive); }); }
+  </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# robots.txt for https://obserc.com
+
+User-agent: *
+Allow: /
+
+# Point crawlers to the sitemap
+Sitemap: https://obserc.com/sitemap.xml

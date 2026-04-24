@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support | Obserc Your World. Shared & Secured.</title>
+  <meta name="description" content="Need help with Obserc? Contact our support team, report an issue, or ask a question. We're here to help keep your circle safe." />
+  <link rel="icon" type="image/svg+xml" href="obserc-favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 24px;
+      margin-top: -20px;
+    }
+    
+    /* Support Info Card (Left Column) */
+    .support-info-card {
+      background: var(--navy);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-lg);
+    }
+    .support-info-card::after {
+      content: '';
+      position: absolute;
+      top: -50px; left: -50px;
+      width: 250px; height: 250px;
+      background: radial-gradient(circle, rgba(59,130,246,0.3) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .support-contact-block {
+      margin-top: auto;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 2;
+    }
+    .support-email-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 16px;
+      transition: transform 0.2s, color 0.2s;
+    }
+    .support-email-link:hover {
+      transform: translateX(4px);
+      color: var(--accent-light);
+    }
+    .support-image-wrap {
+      margin: 0 -40px -40px -40px;
+      height: 220px;
+      position: relative;
+    }
+    .support-image-wrap::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, var(--navy) 0%, transparent 100%);
+      z-index: 1;
+    }
+    .support-image-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0.6;
+    }
+
+    /* Form Styles (Right Column) */
+    .form-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+    }
+    .form-group {
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .form-control {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border-strong);
+      background: var(--bg);
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+    .form-control::placeholder { color: var(--muted); opacity: 0.6; }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-light);
+    }
+    textarea.form-control {
+      resize: vertical;
+      min-height: 140px;
+    }
+    select.form-control {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%230a0d14' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .support-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .form-wrapper { padding: 32px 24px; }
+      .support-info-card { padding: 32px; }
+      .support-image-wrap { margin: 0 -32px -32px -32px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="pill-nav" role="navigation" aria-label="Main navigation">
+  <a href="/" class="nav-logo-circle" aria-label="Obserc home">
+    <img src="obserc-favicon.svg" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="eager" />
+    <span class="nav-logo-fallback" style="display:none;" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg>
+    </span>
+  </a>
+  
+  <div class="nav-menu-wrapper" id="nav-wrapper">
+    <div class="nav-slider" id="nav-slider"></div>
+    <a href="/" class="nav-item">Home</a>
+    <a href="/guides.html" class="nav-item">Guides</a>
+    <a href="/features.html" class="nav-item">Features</a>
+    <a href="/support.html" class="nav-item active-text default-active">Support</a>
+    <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="nav-item" target="_blank" rel="noopener noreferrer">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero" aria-label="Support Hero" style="padding-bottom: 40px;">
+  <div class="container">
+    <div class="stagger" style="display:flex;flex-direction:column;align-items:center;">
+      <div class="hero-badge"><span class="dot" aria-hidden="true"></span>We're here for you</div>
+      <h1>
+        <span class="hero-line-sans">How can we</span>
+        <span class="hero-line-serif"><span>help you today?</span></span>
+      </h1>
+      <p class="hero-sub">Whether you're setting up your first circle or experiencing an issue, our team is ready to ensure you stay connected and protected.</p>
+    </div>
+  </div>
+</section>
+
+<section class="bento-section" style="padding-top: 20px;">
+  <div class="container">
+    <div class="support-grid">
+      
+      <div class="support-info-card reveal">
+        <div style="position:relative; z-index:2;">
+          <div class="card-icon white-icon" style="margin-bottom: 24px;">
+            <img src="mailicon.png" alt="Mail icon" style="filter: brightness(0) invert(1);" />
+          </div>
+          <h2 class="card-title" style="color: #fff; font-size: 28px; margin-bottom: 12px;">Get in touch.</h2>
+          <p class="card-desc" style="color: rgba(255,255,255,0.7); font-size: 16px;">
+            Fill out the form or drop us an email directly. We aim to respond to all inquiries within 24 hours.
+          </p>
+        </div>
+        
+        <div class="support-contact-block">
+          <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5);">Direct Email</p>
+          <a href="mailto:support@obserc.com" class="support-email-link">
+            support@obserc.com
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+        <div class="support-image-wrap">
+          <img src="obsercfriends.jpg" alt="Friends using Obserc" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="form-wrapper reveal" style="transition-delay: 0.1s;">
+        <form action="https://formspree.io/f/maqlelvz" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" id="name" name="name" class="form-control" placeholder="e.g. Jane Doe" required />
+            </div>
+            <div class="form-group">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="jane@example.com" required />
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="topic" class="form-label">What can we help you with?</label>
+            <select id="topic" name="topic" class="form-control" required>
+              <option value="" disabled selected>Select a topic...</option>
+              <option value="Account Setup">Account & Setup</option>
+              <option value="Circle Management">Circle Management</option>
+              <option value="SOS/Night Out Mode">SOS Beacon / Night Out Mode</option>
+              <option value="Bug Report">Report a Bug</option>
+              <option value="Feedback">App Feedback</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="message" name="message" class="form-control" placeholder="Please describe your issue or question in detail..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 16px; font-size: 16px;">
+            Send Message
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px; margin-top: 40px;" class="stagger">
+      <a href="/faq.html" class="bento-card" style="display:flex; align-items:center; gap: 20px;">
+        <div class="card-icon yellow-icon" style="margin-bottom:0; flex-shrink:0;"><span style="font-size:20px;">💡</span></div>
+        <div>
+          <p class="card-title" style="margin-bottom:4px;">Browse FAQs</p>
+          <p class="card-desc" style="font-size:13px;">Quick answers to common questions about features and privacy.</p>
+        </div>
+      </a>
+      <a href="/guides.html" class="bento-card" style="display:flex; align-items:center; gap: 20px;">
+        <div class="card-icon green-icon" style="margin-bottom:0; flex-shrink:0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
+        <div>
+          <p class="card-title" style="margin-bottom:4px;">Read User Guides</p>
+          <p class="card-desc" style="font-size:13px;">Step-by-step tutorials on setting up and mastering Obserc.</p>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<footer role="contentinfo" style="margin-top: 40px;">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="obserc-logo.png" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="lazy" />
+          <span class="footer-logo-fallback" style="display:none;" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg></span>
+          Obserc
+        </div>
+        <p class="footer-tagline">Your world. Shared &amp; Secured. Personal safety for you and everyone you care about.</p>
+      </div>
+      <nav aria-label="Product links"><h4>Product</h4>
+        <ul class="footer-links">
+          <li><a href="/features.html">Features</a></li>
+          <li><a href="/guides.html">Guides</a></li>
+          <li><a href="/location-usage.html">Location Usage</a></li>
+          <li><a href="https://apps.apple.com/ca/app/obserc/id6759740570" target="_blank" rel="noopener noreferrer">App Store</a></li>
+          <li><a href="https://devpost.com/software/obserc" target="_blank" rel="noopener noreferrer">Devpost</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Support links"><h4>Support</h4>
+        <ul class="footer-links">
+          <li><a href="/support.html">Contact Us</a></li>
+          <li><a href="/faq.html">FAQ</a></li>
+          <li><a href="mailto:support@obserc.com">support@obserc.com</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Legal links"><h4>Legal</h4>
+        <ul class="footer-links">
+          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms of Service</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year">2026</span> Obserc. All rights reserved.</p>
+      <div class="footer-socials" aria-label="Social links">
+        <a href="https://devpost.com/software/obserc" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Obserc on Devpost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg></a>
+        <a href="mailto:support@obserc.com" class="social-btn" aria-label="Email Obserc support"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Pill Nav Slider Logic
+  const navItems = document.querySelectorAll('.nav-item');
+  const navSlider = document.getElementById('nav-slider');
+  const navWrapper = document.getElementById('nav-wrapper');
+  const defaultActive = document.querySelector('.nav-item.default-active');
+
+  function moveSliderTo(item) {
+    if (!item || !navWrapper) return;
+    if (window.matchMedia && window.matchMedia('(max-width:600px)').matches) {
+      navItems.forEach(nav => nav.classList.remove('active-text'));
+      item.classList.add('active-text');
+      if (navSlider) { navSlider.style.width = ''; navSlider.style.left = ''; }
+      return;
+    }
+    if(!navSlider) return;
+    const itemRect = item.getBoundingClientRect();
+    const wrapperRect = navWrapper.getBoundingClientRect();
+
+    navSlider.style.width = `${itemRect.width}px`;
+    navSlider.style.left = `${itemRect.left - wrapperRect.left}px`;
+
+    navItems.forEach(nav => nav.classList.remove('active-text'));
+    item.classList.add('active-text');
+  }
+
+  // Initialize
+  if(defaultActive) moveSliderTo(defaultActive);
+  window.addEventListener('resize', () => { if (defaultActive) moveSliderTo(defaultActive); });
+
+  // Hover Events
+  navItems.forEach(item => {
+    item.addEventListener('mouseenter', () => moveSliderTo(item));
+  });
+
+  // Snap back to default
+  if(navWrapper) {
+    navWrapper.addEventListener('mouseleave', () => {
+      if(defaultActive) moveSliderTo(defaultActive);
+    });
+  }
+
+  // Scroll reveal
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 55);
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.10, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+</body>
+</html>

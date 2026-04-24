@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Manual & Guides | Obserc</title>
+  <meta name="description" content="Official Obserc User Manual. Learn how to set up your safety circle, use Night Out Mode, trigger SOS Beacons, and stay protected." />
+    <link rel="icon" type="image/svg+xml" href="obserc-favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .guide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+    }
+    .guide-card:hover {
+      border-color: rgba(59,130,246,0.3);
+      box-shadow: var(--shadow);
+    }
+    .guide-card.open {
+      grid-column: 1 / -1;
+      cursor: default;
+      border-color: rgba(59,130,246,0.4);
+    }
+    .guide-card-header {
+      padding: 24px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+    }
+    .guide-card-header-left {
+      display: flex;
+      flex-direction: column;
+    }
+    .guide-number {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 4px 10px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-bottom: 16px;
+      width: max-content;
+    }
+    .guide-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .guide-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .guide-chevron {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), background 0.2s, border-color 0.2s;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .guide-card.open .guide-chevron {
+      transform: rotate(180deg);
+      background: var(--accent-light);
+      border-color: rgba(59,130,246,0.3);
+      color: var(--accent);
+    }
+    .guide-body {
+      display: none;
+      padding: 0 28px 28px;
+      border-top: 1px solid var(--border);
+      margin-top: 0;
+    }
+    .guide-card.open .guide-body {
+      display: block;
+      animation: fadeBodyIn 0.3s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+    @keyframes fadeBodyIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Guide body content typography */
+    .guide-body h2 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 28px 0 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .guide-body h3 {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 20px 0 8px;
+    }
+    .guide-body p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 10px;
+    }
+    .guide-body ol, .guide-body ul {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+    .guide-body li {
+      margin-bottom: 4px;
+    }
+    .guide-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .guide-body table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 16px 0;
+    }
+    .guide-body th {
+      text-align: left;
+      padding: 8px 12px;
+      color: var(--text);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .guide-body td {
+      padding: 9px 12px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .guide-body tr:last-child td {
+      border-bottom: none;
+    }
+    .guide-body blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 10px 16px;
+      margin: 16px 0;
+      background: var(--accent-light);
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .guide-body blockquote strong {
+      color: var(--accent);
+    }
+    .guide-body .guide-section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+    .guide-body .guide-tip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 12px 0;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="pill-nav" role="navigation" aria-label="Main navigation">
+  <a href="/" class="nav-logo-circle" aria-label="Obserc home">
+    <img src="obserc-favicon.svg" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="eager" />
+    <span class="nav-logo-fallback" style="display:none;" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg>
+    </span>
+  </a>
+  
+  <div class="nav-menu-wrapper" id="nav-wrapper">
+    <div class="nav-slider" id="nav-slider"></div>
+    <a href="/" class="nav-item">Home</a>
+    <a href="/guides.html" class="nav-item active-text default-active">Guides</a>
+    <a href="/features.html" class="nav-item">Features</a>
+    <a href="/support.html" class="nav-item">Support</a>
+    <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="nav-item" target="_blank" rel="noopener noreferrer">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero" aria-label="Guides Hero" style="padding-bottom: 40px;">
+  <div class="container">
+    <div class="stagger" style="display:flex;flex-direction:column;align-items:center;">
+      <div class="hero-badge"><span class="dot" aria-hidden="true"></span>Official Documentation</div>
+      <h1>
+        <span class="hero-line-sans">User Manual</span>
+        <span class="hero-line-serif"><span>&amp; Guides.</span></span>
+      </h1>
+      <p class="hero-sub">Personal safety for the moments that matter. Learn how to set up Obserc and keep your trusted people connected.</p>
+    </div>
+  </div>
+</section>
+
+<section class="bento-section" style="padding-top: 20px; padding-bottom: 60px;">
+  <div class="container stagger">
+    
+    <div class="bento-card accent-card" style="background: var(--red); margin-bottom: 24px;">
+      <div style="display: flex; gap: 16px; align-items: flex-start;">
+        <div class="card-icon" style="background: rgba(255,255,255,0.2); margin-bottom: 0; flex-shrink: 0;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div>
+          <h3 class="card-title" style="color: #fff; font-size: 20px;">Safety Note</h3>
+          <p class="card-desc" style="color: rgba(255,255,255,0.9); font-size: 15px;">
+            Obserc is designed to support your safety habits and keep your trusted people informed. It does not replace emergency services. <strong>If you are in immediate danger, call your local emergency number, 911, 999, 112, or equivalent, first.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 56px;">
+      <div class="bento-card">
+        <p class="card-title">What is Obserc?</p>
+        <p class="card-desc">Most safety tools wait for something to go wrong. Obserc creates a live safety net around you before anything happens, so the people who care about you can act fast if it ever does.</p>
+      </div>
+      <div class="bento-card">
+        <p class="card-title">Who is it for?</p>
+        <p class="card-desc">Built for students heading home late, young women wanting trusted contacts to know they are okay, friends looking out for each other, families, and drivers.</p>
+      </div>
+      <div class="bento-card">
+        <p class="card-title">How it works</p>
+        <ol style="margin-top: 8px; margin-left: 16px; font-size: 14px; color: var(--muted); line-height: 1.6;">
+          <li><strong>Build your circle:</strong> Invite the people you trust most.</li>
+          <li><strong>Go about your life:</strong> Check in, nudge, or start a Night Out.</li>
+          <li><strong>If something goes wrong:</strong> One tap sends an SOS Beacon with your live location.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-bottom: 32px;">
+      <h2 class="section-heading">Full Manual</h2>
+      <p class="section-sub">Tap any chapter to expand the full guide.</p>
+    </div>
+
+    <div class="guide-grid" id="guide-grid">
+
+      <!-- 01 Overview -->
+      <div class="guide-card" data-index="0">
+        <div class="guide-card-header">
+          <div class="guide-card-header-left">
+            <span class="guide-number">01</span>
+            <h3 class="guide-title">Overview</h3>
+            <p class="guide-desc">What Obserc is, who it helps, and how it fits into daily life.</p>
+          </div>
+          <span class="guide-chevron" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="guide-body">
+          <h2>What Obserc is</h2>
+          <p>Obserc is a personal safety app for iPhone. It connects you with the people you trust most, your circle, so they can see you are okay, know where you are, and act fast if something ever goes wrong.</p>
+          <p>Most safety tools are reactive. They wait for an emergency to happen. Obserc is proactive. It creates a live safety net around you before anything happens, so the response is already in motion if it ever does.</p>
+
+          <h2>Who it is for</h2>
+          <p>Obserc is built for anyone who wants trusted people to know they are okay, and for the trusted people who want to know.</p>
+          <p>In practice, Obserc is most useful for:</p>
+          <ul>
+            <li>Students heading home late or navigating an unfamiliar campus</li>
+            <li>Young women who want a trusted person to know they got home safely</li>
+            <li>Friends who want to look out for each other on a night out</li>
+            <li>Families who want a shared safety layer without constant check-in messages</li>
+            <li>Drivers who want to share journey visibility with people they trust</li>
+            <li>Anyone who has ever felt unsafe and wished someone knew where they were</li>
+          </ul>
+
+          <h2>Core features</h2>
+          <p>Obserc is built around five core features that work together:</p>
+          <table>
+            <thead><tr><th>Feature</th><th>What it does</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Circles</strong></td><td>Your private safety group. Check-ins, nudges, and SOS events flow through your circle.</td></tr>
+              <tr><td><strong>Circle Map</strong></td><td>See where your circle members are in real time.</td></tr>
+              <tr><td><strong>Night Out</strong></td><td>A dedicated safety session for going out. Includes wingman visibility, squad tracking, and safety tools.</td></tr>
+              <tr><td><strong>SOS Beacon</strong></td><td>One-tap urgent alert to your entire circle with your live location.</td></tr>
+              <tr><td><strong>Drive</strong></td><td>Automatic journey monitoring with circle visibility and Drive SOS.</td></tr>
+            </tbody>
+          </table>
+
+          <h2>How safety works in Obserc</h2>
+          <p>Obserc is not a monitoring tool. It gives you control over what your circle sees and when. You choose who is in your circle, what they can see, and when you share your location. Privacy controls including Ghost Mode and visibility settings let you adjust this at any time.</p>
+          <p>Safety in Obserc is two-directional: you can check on the people in your circle, and they can check on you. The app is designed so that the act of using it, checking in, nudging a friend, starting a Night Out, becomes a natural safety habit rather than something you only reach for in an emergency.</p>
+
+          <blockquote><strong>Important:</strong> Obserc does not contact emergency services on your behalf. SOS Beacon alerts your trusted circle, the people you have chosen. If you are in immediate danger, always call your local emergency number first.</blockquote>
+        </div>
+      </div>
+
+      <!-- 02 Getting Started -->
+      <div class="guide-card" data-index="1">
+        <div class="guide-card-header">
+          <div class="guide-card-header-left">
+            <span class="guide-number">02</span>
+            <h3 class="guide-title">Getting Started</h3>
+            <p class="guide-desc">Download, sign up, permissions, and first-time setup.</p>
+          </div>
+          <span class="guide-chevron" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="guide-body">
+          <h2>Download the app</h2>
+          <p>Obserc is available on the App Store for iPhone.</p>
+          <ol>
+            <li>Open the App Store on your iPhone</li>
+            <li>Search for <strong>Obserc</strong></li>
+            <li>Tap <strong>Get</strong> to download and install</li>
+          </ol>
+
+          <h2>Creating a new account</h2>
+          <p>When you open Obserc for the first time, you will be taken through a short setup flow.</p>
+
+          <h3>Sign-in method</h3>
+          <p>You will be asked to choose how you want to sign in:</p>
+          <ul>
+            <li><strong>Sign in with Apple</strong>, the fastest path. Uses your Apple ID to create your account. Recommended if you want a simple, one-tap sign-in going forward.</li>
+            <li><strong>Phone number or email</strong>, a traditional sign-up flow covered in the steps below.</li>
+          </ul>
+
+          <h3>Phone number</h3>
+          <p>If you choose the phone/email path, enter your phone number including your country code, then tap Continue. You will receive an SMS verification code, enter it to confirm your number. Your phone number is used as your primary identity in the app and for account recovery.</p>
+
+          <h3>Email address (optional)</h3>
+          <p>You will be given the option to add an email address. This is optional at sign-up but recommended, it gives you a second way to sign in and recover your account if you ever lose access to your phone number.</p>
+
+          <h3>Password</h3>
+          <p>Create a password for your account. Choose something you will remember, you may need it to sign back in on a new device.</p>
+
+          <h3>Your name</h3>
+          <p>Enter your first and last name. This is how you appear to members of your circles.</p>
+
+          <h3>Username</h3>
+          <p>Choose a username. This is your public identifier, other users can find you or add you to a circle using your username. Keep it simple and recognisable to your friends. You can update it later in your profile settings.</p>
+
+          <h3>Home address (optional)</h3>
+          <p>You can add your home address as a saved safe place. If you add it, the app can use it as a reference point for check-ins and arrival detection.</p>
+
+          <h3>Notifications</h3>
+          <p>Allow notifications when prompted. Obserc uses notifications for circle check-ins and nudges, SOS alerts from circle members, Night Out session updates, and Drive arrivals and events. If you skip this step, you will miss real-time safety alerts from your circle. You can enable notifications later in <strong>iPhone Settings → Notifications → Obserc</strong>.</p>
+
+          <h3>Location access</h3>
+          <p>Allow location access when prompted. Choose <strong>Always Allow</strong> for the best experience. Location is used for sharing your position with your circle, the Circle Map, Night Out tracking, Drive monitoring, and SOS Beacon. You can adjust location permissions at any time in <strong>iPhone Settings → Privacy & Security → Location Services → Obserc</strong>.</p>
+
+          <h3>Terms and privacy</h3>
+          <p>Review and accept the Terms of Service and Privacy Policy to complete your account setup. Once setup is complete, you will land on the Status tab, your home base in Obserc.</p>
+
+          <h2>Returning user: sign in</h2>
+          <h3>Sign in with phone number</h3>
+          <ol>
+            <li>Tap <strong>Sign in</strong></li>
+            <li>Enter your phone number</li>
+            <li>Enter the verification code sent by SMS</li>
+          </ol>
+
+          <h3>Sign in with email and password</h3>
+          <ol>
+            <li>Tap <strong>Sign in</strong></li>
+            <li>Enter your email address and password</li>
+            <li>Tap <strong>Continue</strong></li>
+          </ol>
+
+          <h3>Forgot your password?</h3>
+          <ol>
+            <li>Tap <strong>Sign in</strong></li>
+            <li>Tap <strong>Forgot password</strong></li>
+            <li>Enter your email address</li>
+            <li>Check your email for a password reset link</li>
+            <li>Tap the link and follow the steps to create a new password</li>
+            <li>Return to the app and sign in with your new password</li>
+          </ol>
+          <blockquote>The password reset link expires after a short time. If yours has expired, request a new one by going through the Forgot password flow again.</blockquote>
+
+          <h2>What to do after signing in for the first time</h2>
+          <ol>
+            <li><strong>Set up your first Circle</strong>, invite at least one trusted person</li>
+            <li><strong>Add emergency contacts</strong>, people Obserc can reference in an SOS situation</li>
+            <li><strong>Add a safe place</strong>, your home address or another trusted location</li>
+            <li><strong>Try a check-in</strong>, send your first safety update to your circle</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- 03 Status Tab -->
+      <div class="guide-card" data-index="2">
+        <div class="guide-card-header">
+          <div class="guide-card-header-left">
+            <span class="guide-number">03</span>
+            <h3 class="guide-title">Status Tab</h3>
+            <p class="guide-desc">Safety state, check-ins, nudges, safe places, emergency contacts.</p>
+          </div>
+          <span class="guide-chevron" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="guide-body">
+          <h2>What the Status tab is for</h2>
+          <p>The Status tab is your home base in Obserc. It gives you a live view of your safety state, quick access to every major action, and a summary of how connected you are to your circle. You will land here every time you open the app.</p>
+
+          <h2>Greeting and daily summary</h2>
+          <p>At the top of the Status tab, Obserc greets you and shows a summary of recent activity, your streak, your last check-in, and a snapshot of your circle's status.</p>
+
+          <h2>Safety state card</h2>
+          <p>The safety state card shows your current status at a glance. There are five states:</p>
+          <table>
+            <thead><tr><th>State</th><th>What it means</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Protected</strong></td><td>You are in an active Night Out or SOS session. Your circle is fully aware.</td></tr>
+              <tr><td><strong>Alone</strong></td><td>No circle members are currently active or nearby.</td></tr>
+              <tr><td><strong>Circle Ready</strong></td><td>At least one circle member is active and your connection is strong.</td></tr>
+              <tr><td><strong>Circle Weak</strong></td><td>Your circle connection is limited, fewer active members or reduced location sharing.</td></tr>
+              <tr><td><strong>Monitoring</strong></td><td>Obserc is running in the background with passive monitoring active.</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Quick actions</h2>
+          <h3>Check in</h3>
+          <p>Sends a safety update to your circle feed so your people know you are okay. Tap <strong>Check in</strong>, add an optional note or location, then tap <strong>Send</strong>. Your check-in appears in the Circle Feed for all members of your active circle.</p>
+
+          <h3>Nudge</h3>
+          <p>Sends a fast "are you okay?" to someone in your circle. Tap <strong>Nudge</strong>, select a circle member, and the nudge is sent immediately. The recipient sees a notification and can respond directly. Nudges also appear in the Circle Feed.</p>
+
+          <h3>SOS Beacon</h3>
+          <p>Triggers an urgent alert to your circle with your live location. Tap <strong>SOS Beacon</strong> only when you need help. A short countdown appears, you can cancel during this window. If not cancelled, your SOS is sent to all members of your active circle.</p>
+
+          <h3>Night Out</h3>
+          <p>Opens the Night Out setup flow for going out safely with friends.</p>
+
+          <h3>Drive</h3>
+          <p>Opens the Drive monitoring area for driving safety.</p>
+
+          <h2>Streaks and habit building</h2>
+          <p>Obserc tracks your check-in streak, consecutive days you have sent at least one check-in to your circle. Building a streak encourages the kind of regular safety habits that make the app most useful over time. Your current streak is shown in the greeting area at the top of the Status tab.</p>
+
+          <h2>Status tab drawers</h2>
+          <p>Swipe up or scroll down on the Status tab to access three drawer sections.</p>
+
+          <h3>Members</h3>
+          <p>Shows the members of your currently active circle, their status, and whether they are reachable. Tap a member to nudge them, view their location on the map, or start an interaction.</p>
+
+          <h3>Safe places</h3>
+          <p>A list of saved locations, home, work, a friend's house, that Obserc recognises as trusted destinations. To add a safe place: tap <strong>Safe places</strong> in the drawer, then <strong>Add place</strong>, search for an address or drop a pin, give it a name (e.g. Home, Work, Mum's), and tap <strong>Save</strong>. Safe places are used for arrival detection and as reference points in Night Out and Drive sessions.</p>
+
+          <h3>Emergency contacts</h3>
+          <p>People outside the app who can be referenced in an emergency, a parent, a partner, or a local contact. To add one: tap <strong>Emergency contacts</strong> in the drawer, then <strong>Add contact</strong>, enter a name and phone number, and tap <strong>Save</strong>. Emergency contacts are visible to you in the app during an SOS event. They are not Obserc users and do not receive in-app alerts unless you contact them directly.</p>
+
+          <h3>Signal strength / circle readiness</h3>
+          <p>Shows how connected you currently are to your circle, based on how many members are active, whether location sharing is enabled, and whether your network connection is strong. Tap it to see a breakdown of what is contributing to your current safety state.</p>
+        </div>
+      </div>
+
+      <!-- 04 Circles -->
+      <div class="guide-card" data-index="3">
+        <div class="guide-card-header">
+          <div class="guide-card-header-left">
+            <span class="guide-number">04</span>
+            <h3 class="guide-title">Circles</h3>
+            <p class="guide-desc">Creating, joining, and managing your safety circles.</p>
+          </div>
+          <span class="guide-chevron" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="guide-body">
+          <h2>What a Circle is</h2>
+          <p>A Circle is a private safety group made up of people you trust. Everyone in a circle shares a level of safety awareness with each other, check-ins, nudges, SOS events, and location updates all flow through the circle. You can be a member of more than one circle. One circle is always your <strong>active circle</strong>, the one that receives your check-ins and safety events.</p>
+
+          <h2>Viewing your active circle</h2>
+          <p>Open the <strong>Circles tab</strong> (second icon in the tab bar) to see your currently active circle. The main screen shows the circle name and member count, member cards with their current status, a mini map showing where members are, the daily activity summary, and quick access to the Circle Feed.</p>
+
+          <h2>Switching circles</h2>
+          <p>If you are a member of more than one circle, tap the circle name at the top of the Circles tab. A sheet appears showing all your circles, tap any circle to make it active. Your active circle is the one that receives your check-ins, nudges, and SOS alerts.</p>
+
+          <h2>Creating a circle</h2>
+          <ol>
+            <li>Open the Circles tab</li>
+            <li>Tap the circle name → <strong>Your circles</strong></li>
+            <li>Tap <strong>Create circle</strong></li>
+            <li>Enter a circle name</li>
+            <li>Tap <strong>Create</strong></li>
+          </ol>
+          <p>Your new circle is created with you as the owner. Share the circle code or your username to invite members.</p>
+
+          <h2>Inviting someone to your circle</h2>
+          <h3>Via circle code</h3>
+          <ol>
+            <li>Open the circle you want to share</li>
+            <li>Tap <strong>Manage circle</strong> or the settings icon</li>
+            <li>Tap <strong>Invite members</strong></li>
+            <li>Share the circle code via message, AirDrop, or any other method</li>
+          </ol>
+          <h3>Via username</h3>
+          <p>You can also find and invite someone directly if you know their Obserc username.</p>
+
+          <h2>Joining a circle</h2>
+          <p>If someone shares a circle code or invite link with you: open the Circles tab, tap <strong>Join a circle</strong>, enter the circle code, and tap <strong>Join</strong>. You will be added immediately and can start seeing the circle's activity feed.</p>
+
+          <h2>The Circle Feed</h2>
+          <p>The Circle Feed is the activity inbox for your circle. It shows a running log of check-ins, nudges, SOS events, Night Out session activity, and join and invite notifications. Tap <strong>Feed</strong> on the Circles tab main screen to open it.</p>
+          <table>
+            <thead><tr><th>Type</th><th>What it shows</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Check-in</strong></td><td>A member confirmed they are okay, with optional note and location</td></tr>
+              <tr><td><strong>Nudge</strong></td><td>A "are you okay?" sent between members</td></tr>
+              <tr><td><strong>SOS</strong></td><td>An active or resolved SOS event with location</td></tr>
+              <tr><td><strong>Night Out</strong></td><td>Session started, ended, or invite received</td></tr>
+              <tr><td><strong>Join</strong></td><td>A new member joined the circle</td></tr>
+            </tbody>
+          </table>
+          <p>Tap the filter pills at the top of the feed to show only specific event types. If a circle member has an active SOS, it appears pinned at the top of the feed with their live location and a prompt to acknowledge.</p>
+
+          <h2>Managing your circle</h2>
+          <h3>As a member</h3>
+          <p>You can leave a circle at any time via <strong>Manage circle → Leave circle</strong>.</p>
+          <h3>As the circle owner</h3>
+          <p>Tap <strong>Manage circle</strong> to access owner-only controls: rename the circle, remove a member, or delete the circle permanently.</p>
+          <blockquote><strong>Note:</strong> Deleting a circle cannot be undone. All feed history will be lost.</blockquote>
+        </div>
+      </div>
+
+      <!-- 05 Circle Map -->
+      <div class="guide-card" data-index="4">
+        <div class="guide-card-header">
+          <div class="guide-card-header-left">
+            <span class="guide-number">05</span>
+            <h3 class="guide-title">Circle Map</h3>
+            <p class="guide-desc">Full-screen map, member locations, trails, Meet Me pins, privacy.</p>
+          </div>
+          <span class="guide-chevron" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="guide-body">
+          <h2>What the Circle map is</h2>
+          <p>The Circle map is a real-time map showing the location of members in your active circle. It respects each member's privacy settings, members who have paused location sharing or enabled Ghost Mode will not appear.</p>
+
+          <h2>Mini map vs full-screen map</h2>
+          <p>A <strong>mini map</strong> is embedded in the Circles tab main screen, giving you a quick overview of where your circle members are without leaving the tab. To open the <strong>full-screen map</strong>, tap the mini map or tap the expand icon.</p>
+
+          <h2>Finding a member on the map</h2>
+          <ol>
+            <li>Open the full-screen Circle map</li>
+            <li>Tap the <strong>search icon</strong> at the top</li>
+            <li>Type a member's name</li>
+            <li>Tap their name to jump the map to their location</li>
+          </ol>
+
+          <h2>Map styles</h2>
+          <p>Tap the <strong>layers icon</strong> to switch between map styles:</p>
+          <table>
+            <thead><tr><th>Style</th><th>Best for</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Standard</strong></td><td>Everyday use, clear roads and labels</td></tr>
+              <tr><td><strong>Light</strong></td><td>Clean, minimal view</td></tr>
+              <tr><td><strong>Dark</strong></td><td>Low-light conditions</td></tr>
+              <tr><td><strong>Satellite</strong></td><td>Seeing exact terrain or building detail</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Member pins</h2>
+          <p>Each circle member appears on the map as a pin with their profile photo. Tap a pin to see their name, their last updated time, and a shortcut to nudge them or view their profile.</p>
+
+          <h2>Recentering on yourself</h2>
+          <p>Tap the <strong>location arrow</strong> icon to recenter the map on your own position.</p>
+
+          <h2>Member trails</h2>
+          <p>When movement logging is enabled, the map can show a trail of a member's recent movement, a line showing where they have been over the past few hours. This is useful during a Night Out or when you want to see a member's route. Trails respect privacy settings. A member who has paused movement logging will not show a trail.</p>
+
+          <h2>Daily movement logs</h2>
+          <p>Tap a member's pin and select <strong>View movement log</strong> to see a timeline of their locations throughout the day. This shows check-in points and movement history for the current day only.</p>
+
+          <h2>Meet Me pins</h2>
+          <p>Meet Me pins let you drop a suggested meeting point on the map and share it with your circle. To drop a Meet Me pin: long-press on any point on the full-screen map, then tap <strong>Meet Me here</strong>. The pin is shared with your circle and appears on their maps. Circle members can tap the Meet Me pin to get directions to that point.</p>
+
+          <h2>Privacy controls</h2>
+          <h3>Ghost Mode</h3>
+          <p>Ghost Mode temporarily hides your location from your circle on the map. While Ghost Mode is active, your pin does not appear on the Circle map, your movement trail is paused, and your general status is still visible to your circle. To enable Ghost Mode: open the full-screen Circle map, tap the <strong>privacy or settings icon</strong>, and toggle <strong>Ghost Mode</strong> on. Ghost Mode stays active until you turn it off. Your circle members are not notified when you enable or disable it.</p>
+
+          <h3>Pausing movement logging</h3>
+          <p>You can pause movement logging independently of Ghost Mode. This stops Obserc from recording your trail without hiding your current location pin.</p>
+
+          <blockquote>Privacy settings here control what your circle sees of you. They do not affect your own view of the map.</blockquote>
+        </div>
+      </div>
+
+      <!-- 06 Night Out -->
+      <div class="guide-card" data-index="5">
+        <div class="guide-card-header">
+          <div class="guide-card-header-left">
+            <span class="guide-number">06</span>
+            <h3 class="guide-title">Night Out</h3>
+            <p class="guide-desc">Setup, wingman, squad tools, Find Squad, Safety Call, Morning After.</p>
+          </div>
+          <span class="guide-chevron" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="guide-body">
+          <h2>What Night Out is for</h2>
+          <p>Night Out is a dedicated safety mode for going out with friends. It creates a shared session between you and your squad, gives a trusted wingman visibility of your night, and provides quick access to safety tools, all without having to think about it once the session is running. Use Night Out whenever you are heading out somewhere unfamiliar, going out late, or want your trusted people to know you are okay throughout the night.</p>
+
+          <h2>Opening Night Out</h2>
+          <p>Tap <strong>Night Out</strong> on the Status tab or from the main navigation. If this is your first time, a short intro screen explains how Night Out works. Tap <strong>Get started</strong> to continue.</p>
+
+          <h2>Setup flow</h2>
+          <h3>1. Select a wingman</h3>
+          <p>Your wingman is one person from your circle who gets elevated visibility of your Night Out, they can see your location, your squad's status, and receive alerts if something goes wrong. Tap <strong>Wingman</strong>, select one member from your active circle, and they will receive a notification that you have chosen them.</p>
+
+          <h3>2. Select squad members</h3>
+          <p>Your squad are the people coming out with you. They can be circle members or Obserc users you invite. Tap <strong>Add squad members</strong> and select from your circle or search by username.</p>
+
+          <h3>3. Add an itinerary (optional)</h3>
+          <p>Add the places you plan to go, a bar, a restaurant, a venue. This helps your wingman follow your night and makes Find Squad more useful. Tap <strong>Add stop</strong>, search for a location or drop a pin, and repeat for each stop.</p>
+
+          <h3>4. Set visibility</h3>
+          <p>Choose who can see your Night Out session: <strong>Circle only</strong>, only your active circle members can see you are in a Night Out; <strong>Squad only</strong>, only your squad members have full visibility; or <strong>Private</strong>, your wingman only.</p>
+
+          <h3>5. Start the session</h3>
+          <p>Tap <strong>Start Night Out</strong> to begin. The Night Out dashboard opens.</p>
+
+          <h2>While a Night Out is active</h2>
+          <h3>Night Out dashboard</h3>
+          <p>The dashboard is your control centre during an active session. It shows your squad members and their current status, active itinerary stops, quick access to all safety tools, and session duration.</p>
+
+          <h3>Night Out tabs</h3>
+          <p>The dashboard has several tabs: <strong>Squad</strong>, live status of everyone in your session; <strong>Map</strong>, the Night Out map showing squad locations; <strong>Itinerary</strong>, your planned stops and current position in the night; <strong>Tools</strong>, quick access to safety actions.</p>
+
+          <h3>I Feel Off</h3>
+          <p>If something feels wrong but you are not in immediate danger, tap <strong>I Feel Off</strong>. This opens a panel with options to alert your wingman quietly, trigger a Safety Call, or escalate to SOS Beacon. Your wingman receives a notification that you have flagged something without a full SOS being sent.</p>
+
+          <h3>Nudging your squad</h3>
+          <p>Tap any squad member's card and select <strong>Nudge</strong> to send a quick check-in request. They will receive a notification asking if they are okay.</p>
+
+          <h3>Find Squad</h3>
+          <p>Find Squad shows you where your squad members are on a live map so you can locate anyone who has wandered off or meet up at the next stop. Tap <strong>Find Squad</strong> from the dashboard or the tools tab.</p>
+
+          <h3>Safety Call</h3>
+          <p>Safety Call simulates an incoming phone call, giving you a believable reason to step away from a situation. To start a Safety Call: tap <strong>Safety Call</strong> from the tools tab or I Feel Off panel, set a delay (immediately, 1 minute, or 3 minutes), and your phone rings as if receiving a real call.</p>
+
+          <h3>Quick access to emergency services</h3>
+          <p>In any emergency, tap the <strong>emergency dial</strong> button in the Night Out tools to open your phone's dialler with the emergency number pre-filled.</p>
+          <blockquote><strong>Always call emergency services first if you are in immediate danger. This is a direct call, not an in-app feature.</strong></blockquote>
+
+          <h3>Triggering Night Out SOS</h3>
+          <p>Tap <strong>SOS</strong> from the Night Out dashboard to trigger an SOS Beacon within your Night Out session. Your squad and wingman are alerted immediately with your live location.</p>
+
+          <h3>Managing members during a session</h3>
+          <p>Tap <strong>Manage session</strong> to add or remove squad members mid-session, change your wingman, or view who has seen your status.</p>
+
+          <h3>Editing your itinerary during a session</h3>
+          <p>Tap <strong>Itinerary</strong> in the dashboard, then <strong>Edit</strong> to add, remove, or reorder stops while the session is running.</p>
+
+          <h2>Ending a Night Out</h2>
+          <p>Tap <strong>End Night Out</strong> from the dashboard to close your session. You will be asked to confirm. Once ended, the session is saved to your Activity history.</p>
+
+          <h2>Morning After report</h2>
+          <p>After your session ends, Obserc generates a <strong>Morning After report</strong>, a summary of your night including session duration, stops visited, squad members and their check-in status, and any safety events that occurred. The report is available in the Activity tab and is visible only to you.</p>
+        </div>
+      </div>
+
+      <!-- 07 SOS -->
+      <div class="guide-card" data-index="6">
+        <div class="guide-card-header">
+          <div class="guide-card-header-left">
+            <span class="guide-number">07</span>
+            <h3 class="guide-title">SOS</h3>
+            <p class="guide-desc">SOS Beacon, Critical SOS, what your circle sees, cancellation.</p>
+          </div>
+          <span class="guide-chevron" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="guide-body">
+          <blockquote><strong>If you are in immediate danger, call your local emergency number (911, 999, 112, or equivalent) first. Obserc SOS alerts your trusted circle, it does not contact emergency services.</strong></blockquote>
+
+          <h2>What SOS Beacon is</h2>
+          <p>SOS Beacon is an urgent alert that notifies every member of your active circle that you need help. When triggered, it sends your live location to your circle immediately and keeps updating it until the SOS is resolved. SOS is designed to work with minimal interaction, one tap, a short countdown, and your people know where you are.</p>
+
+          <h2>Standard SOS vs Critical SOS</h2>
+          <p>Obserc has two SOS states:</p>
+          <table>
+            <thead><tr><th></th><th>Standard SOS</th><th>Critical SOS</th></tr></thead>
+            <tbody>
+              <tr><td><strong>When to use</strong></td><td>You feel unsafe or need help but are not in immediate physical danger</td><td>You are in immediate danger</td></tr>
+              <tr><td><strong>Alert level</strong></td><td>Urgent notification to your circle</td><td>High-priority alert, louder, more persistent</td></tr>
+              <tr><td><strong>Live location</strong></td><td>Yes</td><td>Yes, continuous updates</td></tr>
+              <tr><td><strong>Circle Feed</strong></td><td>Pinned at top</td><td>Pinned at top with Critical indicator</td></tr>
+            </tbody>
+          </table>
+
+          <h2>How to trigger an SOS</h2>
+          <h3>From the Status tab</h3>
+          <ol>
+            <li>Tap <strong>SOS Beacon</strong> on the Status tab</li>
+            <li>A countdown appears (a few seconds)</li>
+            <li>If you do not cancel, the SOS is sent</li>
+          </ol>
+          <h3>From Night Out</h3>
+          <p>Tap <strong>SOS</strong> in the Night Out dashboard.</p>
+          <h3>From Drive</h3>
+          <p>Tap <strong>SOS</strong> in the Drive screen.</p>
+
+          <h2>The countdown window</h2>
+          <p>After tapping SOS, a short countdown gives you a moment to cancel if you triggered it accidentally. Once the countdown ends, the SOS is sent and your circle is notified. Do not rely on the countdown in a genuine emergency, the SOS sends quickly.</p>
+
+          <h2>What happens after an SOS is sent</h2>
+          <ol>
+            <li>Every member of your active circle receives an urgent push notification</li>
+            <li>Your live location appears on their Circle map</li>
+            <li>An SOS event is pinned at the top of the Circle Feed</li>
+            <li>Your location continues updating in real time until the SOS is resolved</li>
+          </ol>
+
+          <h2>What your circle sees</h2>
+          <p>Circle members see a high-priority notification with your name, your current location on the Circle map, an active SOS item in the Circle Feed with your location and a timestamp, and an option to acknowledge the SOS. Members can tap the SOS item in the feed to open your live location and contact you directly.</p>
+
+          <h2>Cancelling an SOS</h2>
+          <p>If you triggered an SOS by mistake or the situation is resolved: open Obserc, tap <strong>Cancel SOS</strong> on the active SOS banner, and confirm cancellation. Your circle members will see that the SOS has been resolved. The event remains in the Circle Feed as a resolved item.</p>
+
+          <h2>Night Out SOS and Drive SOS</h2>
+          <p>If you trigger SOS during a Night Out session, your alert goes to both your active circle and your Night Out squad and wingman. If you trigger SOS during an active Drive session, your SOS includes your current driving location and is sent to your active circle.</p>
+
+          <h2>Tips for using SOS effectively</h2>
+          <ul>
+            <li><strong>Set up your circle before you need it.</strong> An SOS sent to an empty circle alerts nobody. Make sure you have at least one active circle member.</li>
+            <li><strong>Keep location access set to Always Allow.</strong> If Obserc cannot access your location, your SOS will still send, but without a precise location attached.</li>
+            <li><strong>Do not hesitate.</strong> SOS is reversible. It is always better to send and cancel than to not send at all.</li>
+            <li><strong>Call emergency services too.</strong> Obserc alerts your trusted people, it is not a substitute for calling 999 or 911.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 08 Drive -->
+      <div class="guide-card" data-index="7">
+        <div class="guide-card-header">
+          <div class="guide-card-header-left">
+            <span class="guide-number">08</span>
+            <h3 class="guide-title">Drive</h3>
+            <p class="guide-desc">Drive monitoring, events, history, visibility, Drive SOS.</p>
+          </div>
+          <span class="guide-chevron" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="guide-body">
+          <h2>What Drive is for</h2>
+          <p>Drive is Obserc's driving safety feature. It monitors your journeys, logs events, detects arrivals, and gives your circle visibility while you are on the road, without requiring you to interact with your phone while driving. Drive also includes a Drive SOS so you can alert your circle from the road if something goes wrong.</p>
+
+          <h2>How drive monitoring works</h2>
+          <p>When you start driving, Obserc detects your motion and begins monitoring your journey automatically. You do not need to start a session manually. Drive uses your iPhone's motion and location data. For the best experience, keep location access set to <strong>Always Allow</strong> and allow motion and fitness access when prompted. Drive monitoring runs passively in the background.</p>
+
+          <h2>The live drive card</h2>
+          <p>While you are driving, the Drive screen shows a live drive card with journey start time and duration, current speed and route, a visual indicator that monitoring is active, and quick access to Drive SOS.</p>
+
+          <h2>Circle driving visibility</h2>
+          <p>While a drive is active, members of your circle can see that you are driving. What they see depends on your visibility settings.</p>
+
+          <h2>Drive stats</h2>
+          <p>The Drive screen shows a summary of your driving activity for the current week: total journeys, total distance, total drive time, and drive score trend.</p>
+
+          <h2>Today's events feed</h2>
+          <p>Below the stats summary, the Drive screen shows a feed of today's drive events, start points, stops, arrivals, and any flagged moments from your current or most recent journey.</p>
+
+          <h2>Drive score</h2>
+          <p>Obserc tracks a drive score based on your journey behaviour over time. Tap the score section to open a detailed trend view showing how your score has changed over recent weeks.</p>
+
+          <h2>Arrivals</h2>
+          <p>When you arrive at a destination, especially a saved safe place, Obserc logs the arrival and can notify your circle. Tap an arrival event in the feed to see the full details including time, location, and journey duration.</p>
+
+          <h2>Drive history</h2>
+          <p>Tap <strong>History</strong> to see a log of all your past drives, including date and time, start and end points, duration and distance, and any events flagged during the journey.</p>
+
+          <h2>Visibility controls</h2>
+          <p>You control what your circle can see while you are driving. Open the Drive screen, tap the <strong>visibility icon</strong> or <strong>settings</strong>, and choose your visibility level:</p>
+          <table>
+            <thead><tr><th>Level</th><th>What your circle sees</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Full</strong></td><td>Your live location and that you are driving</td></tr>
+              <tr><td><strong>Driving only</strong></td><td>That you are driving, but not your exact location</td></tr>
+              <tr><td><strong>Private</strong></td><td>Nothing, your drive is not shared</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Drive settings</h2>
+          <p>Tap <strong>Settings</strong> in the Drive screen to configure automatic drive detection on or off, arrival notifications, circle visibility defaults, and motion and location permission shortcuts.</p>
+
+          <h2>Drive SOS</h2>
+          <p>If something goes wrong while you are driving, tap <strong>SOS</strong> in the Drive screen or live drive card. Drive SOS works the same as standard SOS Beacon but includes your current driving location. Your active circle is alerted immediately.</p>
+          <blockquote><strong>Never interact with your phone while driving. Pull over safely before using any app feature.</strong></blockquote>
+        </div>
+      </div>
+
+      <!-- 09 Activity -->
+      <div class="guide-card" data-index="8">
+        <div class="guide-card-header">
+          <div class="guide-card-header-left">
+            <span class="guide-number">09</span>
+            <h3 class="guide-title">Activity</h3>
+            <p class="guide-desc">Circle analytics, Night Out stats, and time filters.</p>
+          </div>
+          <span class="guide-chevron" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="guide-body">
+          <h2>What the Activity tab is for</h2>
+          <p>The Activity tab is your safety history. It shows a record of your circle's activity and your Night Out sessions over time, check-ins, nudges, alerts, and tracked nights out, so you can see your safety habits at a glance.</p>
+
+          <h2>Two views: Circle Activity and Nights Out</h2>
+          <h3>Circle Activity</h3>
+          <p>Shows analytics for your active circle over a selected time period, including check-in counts, nudge counts, alert counts, the most active member, and a chart view of activity over time.</p>
+
+          <h3>Nights Out</h3>
+          <p>Shows a history of your Night Out sessions, including total tracked nights out, safe returns, average tracked time per session, total tracked time across all sessions, and top location visited.</p>
+
+          <h2>Time filters</h2>
+          <p>Both views support time filters. Tap the <strong>filter pills</strong> at the top to switch between:</p>
+          <table>
+            <thead><tr><th>Filter</th><th>What it shows</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Week</strong></td><td>The last 7 days</td></tr>
+              <tr><td><strong>Month</strong></td><td>The last 30 days</td></tr>
+              <tr><td><strong>6 months</strong></td><td>The last 6 months</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Chart view</h2>
+          <p>The Circle Activity section includes a chart showing activity volume over your selected time period. Each bar or data point represents a day or week depending on the filter selected. Use the chart to spot patterns, days when your circle is most active, weeks with more alerts than usual, or stretches where check-ins dropped off.</p>
+
+          <h2>Grid view</h2>
+          <p>Below the chart, activity is shown in a grid format, a compact summary of each day's events. Tap any day in the grid to see the individual events that happened that day.</p>
+
+          <h2>Circle Activity metrics</h2>
+          <table>
+            <thead><tr><th>Metric</th><th>What it means</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Check-ins</strong></td><td>Total check-ins sent by all members of your circle in the selected period</td></tr>
+              <tr><td><strong>Nudges</strong></td><td>Total nudges sent and received within the circle</td></tr>
+              <tr><td><strong>Alerts</strong></td><td>Total SOS events triggered within the circle</td></tr>
+              <tr><td><strong>Most active member</strong></td><td>The circle member with the highest check-in count in the period</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Nights Out metrics</h2>
+          <table>
+            <thead><tr><th>Metric</th><th>What it means</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Tracked nights out</strong></td><td>Total Night Out sessions you have completed</td></tr>
+              <tr><td><strong>Safe returns</strong></td><td>Sessions that ended normally with no SOS triggered</td></tr>
+              <tr><td><strong>Average tracked time</strong></td><td>Average session duration across all your nights out</td></tr>
+              <tr><td><strong>Total tracked time</strong></td><td>Combined duration of all your Night Out sessions</td></tr>
+              <tr><td><strong>Top location</strong></td><td>The venue or area that appeared most often in your itineraries</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Morning After reports</h2>
+          <p>Completed Night Out sessions are accessible from the Nights Out tab. Tap any session to open its Morning After report, a full summary of that night including squad activity, stops visited, and any safety events.</p>
+        </div>
+      </div>
+
+      <!-- 10 Profile & Settings -->
+      <div class="guide-card" data-index="9">
+        <div class="guide-card-header">
+          <div class="guide-card-header-left">
+            <span class="guide-number">10</span>
+            <h3 class="guide-title">Profile &amp; Settings</h3>
+            <p class="guide-desc">Account, privacy, permissions, and account management.</p>
+          </div>
+          <span class="guide-chevron" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="guide-body">
+          <h2>Opening your profile</h2>
+          <p>Tap the <strong>Profile tab</strong> in the main navigation (person icon) to access your account details, privacy controls, and app settings.</p>
+
+          <h2>Profile header</h2>
+          <p>At the top of the Profile tab you will see your profile photo, your name, your username, and your current circle.</p>
+
+          <h2>Editing your profile</h2>
+          <p>Tap <strong>Edit profile</strong> to update your personal details. You can change your first and last name, your profile photo, and your username. Tap <strong>Save</strong> when you are done.</p>
+
+          <h2>Updating your username</h2>
+          <p>Your username can be changed at any time from the Edit profile sheet. If you change your username, anyone trying to find you by your old username will no longer be able to locate you.</p>
+
+          <h2>Attaching or updating your email</h2>
+          <ol>
+            <li>Tap <strong>Edit profile</strong></li>
+            <li>Tap the email field</li>
+            <li>Enter your new email address</li>
+            <li>Tap <strong>Save</strong></li>
+          </ol>
+          <p>A verification may be sent to confirm the new address.</p>
+
+          <h2>Subscription and plan</h2>
+          <p>The profile screen shows your current plan. Tap it to view what is included in your current plan, upgrade or manage your subscription, or restore a previous purchase.</p>
+
+          <h2>Notification settings</h2>
+          <p>Tap <strong>Notifications</strong> to jump directly to your iPhone's notification settings for Obserc. From here you can control which alert types trigger a notification, whether notifications appear on your lock screen, and sound and badge settings.</p>
+
+          <h2>Location settings</h2>
+          <p>Tap <strong>Location</strong> to jump directly to your iPhone's location settings for Obserc. Always Allow is recommended for full functionality.</p>
+
+          <h2>Circles and privacy controls</h2>
+          <p>Tap <strong>Circles and privacy</strong> to manage how you appear to your circles. From this sheet you can switch your active circle, view circles you are a member of, leave a circle, control your location sharing defaults, and enable or disable movement logging.</p>
+
+          <h2>Emergency contacts</h2>
+          <p>Tap <strong>Emergency contacts</strong> to view, add, or remove the trusted contacts stored for use during an SOS event. These are people outside the app, a parent, a partner, a local contact, who you may want to reach in an emergency. They do not receive in-app alerts.</p>
+          <ol>
+            <li>Tap <strong>Add contact</strong></li>
+            <li>Enter a name and phone number</li>
+            <li>Tap <strong>Save</strong></li>
+          </ol>
+
+          <h2>Legal</h2>
+          <p>Tap <strong>Legal</strong> to access the Terms of Service, Privacy Policy, and Safety disclaimer.</p>
+
+          <h2>Safety disclaimer</h2>
+          <p>Obserc is a support tool designed to help you stay connected to trusted people. It does not replace emergency services. If you are in immediate danger, call your local emergency number (911, 999, 112, or equivalent) first.</p>
+
+          <h2>Deleting your account</h2>
+          <ol>
+            <li>Tap <strong>Delete account</strong> at the bottom of the Profile tab</li>
+            <li>Read the confirmation message, this action cannot be undone</li>
+            <li>Tap <strong>Confirm delete</strong></li>
+          </ol>
+          <p>Deleting your account removes all your data from Obserc permanently, including your circles, activity history, and profile. Members of your circles will no longer see you.</p>
+
+          <h2>Signing out</h2>
+          <p>Tap <strong>Sign out</strong> at the bottom of the Profile tab to sign out of your account on this device. Your data is not deleted, you can sign back in at any time.</p>
+        </div>
+      </div>
+
+      <!-- 11 FAQ -->
+      <div class="guide-card" data-index="10">
+        <div class="guide-card-header">
+          <div class="guide-card-header-left">
+            <span class="guide-number">11</span>
+            <h3 class="guide-title">FAQ</h3>
+            <p class="guide-desc">Common questions and troubleshooting.</p>
+          </div>
+          <span class="guide-chevron" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="guide-body">
+          <h2>General</h2>
+
+          <h3>Do I need to create a circle before using Obserc?</h3>
+          <p>You can explore the app without a circle, but most features require at least one circle member to be useful. Check-ins, nudges, and SOS alerts all go to your active circle, so if your circle is empty, nobody receives them. Setting up your first circle should be one of your first steps after signing up.</p>
+
+          <h3>What is the difference between a nudge and an SOS?</h3>
+          <p>A <strong>nudge</strong> is a gentle "are you okay?" sent to one person in your circle. It is for everyday check-ins and low-stakes welfare checks, not emergencies. An <strong>SOS Beacon</strong> is an urgent alert sent to your entire active circle with your live location. It is for moments when you feel unsafe or need help immediately. Use nudges regularly. Use SOS when it matters.</p>
+
+          <h3>What is the Circle Feed?</h3>
+          <p>The Circle Feed is the activity inbox for your circle. It shows a running log of check-ins, nudges, SOS events, Night Out activity, and join notifications from everyone in your circle. Open it from the Circles tab.</p>
+
+          <h3>Can I be in more than one circle?</h3>
+          <p>Yes. You can be a member of multiple circles, but only one is active at a time. Your active circle is the one that receives your check-ins and safety events. Switch between circles from the Circles tab.</p>
+
+          <h2>Night Out</h2>
+
+          <h3>Can I use Night Out without a full squad?</h3>
+          <p>Yes. You can start a Night Out session with just a wingman and no additional squad members. The wingman receives elevated visibility of your session regardless of whether anyone else is involved.</p>
+
+          <h3>What does my wingman actually see?</h3>
+          <p>Your wingman sees your live location throughout the Night Out session, your squad's status, your itinerary, and receives a notification if you trigger I Feel Off or SOS. They have more visibility than a regular circle member during an active session.</p>
+
+          <h3>What is the Safety Call feature?</h3>
+          <p>Safety Call simulates an incoming phone call on your iPhone, giving you a way to step away from an uncomfortable situation without having to explain yourself. You set a delay, and your phone rings as if a real call is coming in.</p>
+
+          <h2>Account and sign-in</h2>
+
+          <h3>What happens if I skip email during sign-up?</h3>
+          <p>You can sign up with a phone number only. However, adding an email address gives you a second way to sign in and recover your account if you lose access to your phone number. You can add an email at any time from your profile settings.</p>
+
+          <h3>Can I reset my password?</h3>
+          <p>Yes. On the sign-in screen, tap <strong>Forgot password</strong>, enter your email address, and follow the reset link sent to your inbox. If the link expires before you use it, request a new one.</p>
+
+          <h3>How do I change my username?</h3>
+          <p>Go to the Profile tab, tap <strong>Edit profile</strong>, and update your username. Keep in mind that anyone trying to find you by your old username will no longer be able to locate you after the change.</p>
+
+          <h2>Permissions</h2>
+
+          <h3>What permissions does Obserc need?</h3>
+          <table>
+            <thead><tr><th>Permission</th><th>Why it is needed</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Location, Always Allow</strong></td><td>Circle Map, Night Out tracking, Drive monitoring, SOS location</td></tr>
+              <tr><td><strong>Notifications</strong></td><td>Real-time alerts for check-ins, nudges, SOS, and Night Out events</td></tr>
+              <tr><td><strong>Motion and fitness</strong></td><td>Automatic drive detection</td></tr>
+            </tbody>
+          </table>
+          <p>You can adjust these at any time in <strong>iPhone Settings → Privacy & Security</strong>.</p>
+
+          <h3>Why does Obserc need Always Allow for location?</h3>
+          <p>Always Allow lets Obserc update your location in the background, while you are driving, during a Night Out session, or when an SOS is active. Without it, your location pin may be outdated or missing when your circle needs it most.</p>
+
+          <h2>Privacy</h2>
+
+          <h3>What is Ghost Mode?</h3>
+          <p>Ghost Mode temporarily hides your location pin from your circle on the Circle map. Your movement trail is also paused. Your general status remains visible. Ghost Mode stays on until you turn it off.</p>
+
+          <h3>What can my circle members actually see?</h3>
+          <p>Circle members can see your general safety status, your check-ins and nudges in the Circle Feed, and your location on the Circle map, subject to your privacy settings. If you enable Ghost Mode or pause location sharing, your pin will not appear on the map. During a Night Out, your wingman has elevated visibility.</p>
+
+          <h3>How does Drive visibility work?</h3>
+          <p>You control what your circle sees while you are driving. You can share your full live location, share only that you are driving without a precise location, or keep your drive completely private. Adjust this in Drive settings.</p>
+
+          <h2>Safety</h2>
+
+          <h3>Does Obserc contact emergency services automatically?</h3>
+          <p>No. Obserc does not contact emergency services on your behalf. SOS Beacon alerts your trusted circle, the people you have chosen to be in your safety network. If you are in immediate danger, call your local emergency number (911, 999, 112, or equivalent) directly.</p>
+
+          <h3>What if I trigger SOS by accident?</h3>
+          <p>Tap <strong>Cancel SOS</strong> on the active SOS banner in the app and confirm cancellation. Your circle will see that the SOS has been resolved. The event remains in the Circle Feed as a resolved item.</p>
+
+          <h3>What if my circle is empty when I send an SOS?</h3>
+          <p>If your active circle has no members, your SOS alert will not be received by anyone in the app. This is why setting up at least one circle member before you need the app is important. Consider also saving emergency contacts in your profile as a backup.</p>
+        </div>
+      </div>
+
+      <!-- 12 Glossary -->
+      <div class="guide-card" data-index="11">
+        <div class="guide-card-header">
+          <div class="guide-card-header-left">
+            <span class="guide-number">12</span>
+            <h3 class="guide-title">Glossary</h3>
+            <p class="guide-desc">Definitions for every key term used in the app.</p>
+          </div>
+          <span class="guide-chevron" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+        <div class="guide-body">
+          <h2>C</h2>
+          <h3>Check-in</h3>
+          <p>A quick safety update sent to your active circle feed. A check-in lets your circle know you are okay without requiring a conversation. You can add an optional note or location. Check-ins contribute to your daily streak.</p>
+
+          <h3>Circle</h3>
+          <p>A private safety group made up of people you trust. Everyone in a circle shares safety awareness with each other, check-ins, nudges, SOS events, and location updates all flow through the circle. You can be a member of more than one circle at a time.</p>
+
+          <h3>Circle Feed</h3>
+          <p>The activity inbox for your circle. It shows a running log of check-ins, nudges, SOS events, Night Out activity, and membership notifications from everyone in your circle. Accessible from the Circles tab.</p>
+
+          <h3>Critical SOS</h3>
+          <p>A high-urgency variant of SOS Beacon for moments of serious or immediate danger. Critical SOS sends a louder, more persistent alert to your circle compared to standard SOS and is indicated separately in the Circle Feed.</p>
+
+          <h2>D</h2>
+          <h3>Drive</h3>
+          <p>Obserc's driving safety feature. Drive monitors your journeys automatically, logs events and arrivals, tracks a drive score, and gives your circle visibility while you are on the road. Drive also includes a Drive SOS for emergencies while driving.</p>
+
+          <h3>Drive score</h3>
+          <p>A score tracked by Obserc based on your journey behaviour over time. Viewable as a trend chart in the Drive screen.</p>
+
+          <h2>E</h2>
+          <h3>Emergency contact</h3>
+          <p>A trusted person outside the Obserc app, a parent, partner, or local contact, saved in your profile for reference during an emergency. Emergency contacts do not receive in-app alerts and are not circle members.</p>
+
+          <h2>F</h2>
+          <h3>Find Squad</h3>
+          <p>A Night Out feature that shows you the live locations of your squad members on a map so you can locate anyone who has wandered off or meet up at the next stop.</p>
+
+          <h2>G</h2>
+          <h3>Ghost Mode</h3>
+          <p>A privacy control on the Circle map that temporarily hides your location pin from your circle. While Ghost Mode is active your movement trail is also paused, but your general status remains visible. Ghost Mode stays on until you manually turn it off.</p>
+
+          <h2>M</h2>
+          <h3>Meet Me pin</h3>
+          <p>A location marker you can drop on the Circle map or Night Out map and share with your circle. Circle members can tap a Meet Me pin to get directions to that point.</p>
+
+          <h3>Morning After report</h3>
+          <p>A summary generated by Obserc at the end of every Night Out session. It includes session duration, stops visited, squad member check-in status, and any safety events that occurred during the night.</p>
+
+          <h2>N</h2>
+          <h3>Night Out</h3>
+          <p>A dedicated safety mode for going out with friends. Night Out creates a shared session with your squad, gives your wingman elevated visibility, and provides quick access to safety tools including Find Squad, I Feel Off, Safety Call, and Night Out SOS.</p>
+
+          <h3>Nudge</h3>
+          <p>A fast "are you okay?" sent to one person in your circle. Nudges are for everyday welfare checks, not emergencies. The recipient receives a notification and can respond directly. Nudges appear in the Circle Feed.</p>
+
+          <h2>P</h2>
+          <h3>Primary circle</h3>
+          <p>The circle currently set as your active circle. Your primary circle receives your check-ins, nudges, and SOS alerts. You can switch your primary circle at any time from the Circles tab or Profile settings.</p>
+
+          <h2>S</h2>
+          <h3>Safe place</h3>
+          <p>A saved location, such as your home, workplace, or a friend's address, that Obserc recognises as a trusted destination. Safe places are used for arrival detection and as reference points in Night Out and Drive sessions.</p>
+
+          <h3>SOS Beacon</h3>
+          <p>An urgent one-tap alert that notifies every member of your active circle that you need help. SOS Beacon sends your live location immediately and continues updating it until the SOS is resolved. There are two variants: standard SOS and Critical SOS.</p>
+
+          <h3>Squad</h3>
+          <p>The group of people in your Night Out session. Squad members can be circle members or other Obserc users you invite. Squad members share live location and status during an active Night Out.</p>
+
+          <h2>W</h2>
+          <h3>Wingman</h3>
+          <p>A trusted circle member you assign elevated visibility to during a Night Out session. Your wingman can see your live location, your squad's status, and your itinerary, and receives a notification if you trigger I Feel Off or SOS during the session.</p>
+        </div>
+      </div>
+
+    </div><!-- end guide-grid -->
+
+  </div>
+</section>
+
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="obserc-logo.png" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="lazy" />
+          <span class="footer-logo-fallback" style="display:none;" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg></span>
+          Obserc
+        </div>
+        <p class="footer-tagline">Your world. Shared &amp; Secured. Personal safety for you and everyone you care about.</p>
+      </div>
+      <nav aria-label="Product links"><h4>Product</h4>
+        <ul class="footer-links">
+          <li><a href="/features.html">Features</a></li>
+          <li><a href="/guides.html">Guides</a></li>
+          <li><a href="/location-usage.html">Location Usage</a></li>
+          <li><a href="https://apps.apple.com/ca/app/obserc/id6759740570" target="_blank" rel="noopener noreferrer">App Store</a></li>
+          <li><a href="https://devpost.com/software/obserc" target="_blank" rel="noopener noreferrer">Devpost</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Support links"><h4>Support</h4>
+        <ul class="footer-links">
+          <li><a href="/support.html">Contact Us</a></li>
+          <li><a href="/faq.html">FAQ</a></li>
+          <li><a href="mailto:support@obserc.com">support@obserc.com</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Legal links"><h4>Legal</h4>
+        <ul class="footer-links">
+          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms of Service</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year">2026</span> Obserc. All rights reserved.</p>
+      <div class="footer-socials" aria-label="Social links">
+        <a href="https://devpost.com/software/obserc" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Obserc on Devpost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg></a>
+        <a href="mailto:support@obserc.com" class="social-btn" aria-label="Email Obserc support"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Pill Nav Slider Logic
+  const navItems = document.querySelectorAll('.nav-item');
+  const navSlider = document.getElementById('nav-slider');
+  const navWrapper = document.getElementById('nav-wrapper');
+  const defaultActive = document.querySelector('.nav-item.default-active');
+
+  function moveSliderTo(item) {
+    if (!item || !navWrapper) return;
+    if (window.matchMedia && window.matchMedia('(max-width:600px)').matches) {
+      navItems.forEach(nav => nav.classList.remove('active-text'));
+      item.classList.add('active-text');
+      if (navSlider) { navSlider.style.width = ''; navSlider.style.left = ''; }
+      return;
+    }
+    if(!navSlider) return;
+    const itemRect = item.getBoundingClientRect();
+    const wrapperRect = navWrapper.getBoundingClientRect();
+    navSlider.style.width = `${itemRect.width}px`;
+    navSlider.style.left = `${itemRect.left - wrapperRect.left}px`;
+    navItems.forEach(nav => nav.classList.remove('active-text'));
+    item.classList.add('active-text');
+  }
+
+  if(defaultActive) moveSliderTo(defaultActive);
+  window.addEventListener('resize', () => { if (defaultActive) moveSliderTo(defaultActive); });
+  navItems.forEach(item => {
+    item.addEventListener('mouseenter', () => moveSliderTo(item));
+  });
+  if(navWrapper) {
+    navWrapper.addEventListener('mouseleave', () => {
+      if(defaultActive) moveSliderTo(defaultActive);
+    });
+  }
+
+  // Guide card expand/collapse
+  document.querySelectorAll('.guide-card').forEach(card => {
+    const header = card.querySelector('.guide-card-header');
+    header.addEventListener('click', () => {
+      const isOpen = card.classList.contains('open');
+      // Close all open cards first
+      document.querySelectorAll('.guide-card.open').forEach(c => c.classList.remove('open'));
+      // If it wasn't open, open it
+      if (!isOpen) {
+        card.classList.add('open');
+        // Smooth scroll to card
+        setTimeout(() => {
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 50);
+      }
+    });
+  });
+
+  // Scroll reveal
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 55);
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.10, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal, .guide-card').forEach(el => revealObs.observe(el));
+</script>
+</body>
+</html>

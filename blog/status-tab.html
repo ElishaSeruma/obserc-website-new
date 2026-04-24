@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Status Tab: Stay Visible to Your Circle Without Constant Texting</title>
+  <meta name="description" content="Obserc's Status Tab lets you share your current status passively with your Circle, cutting the 'where are you?' anxiety without requiring constant check-ins." />
+  <link rel="canonical" href="https://obserc.com/blog/status-tab.html" />
+  <link rel="icon" type="image/svg+xml" href="../obserc-favicon.svg" />
+  <link rel="icon" type="image/png" href="../obserc-logo.png" sizes="32x32" />
+  <meta property="og:title" content="The Status Tab: Stay Visible to Your Circle Without Constant Texting" />
+  <meta property="og:description" content="How Obserc's Status Tab eliminates the 'did you get home okay?' text by sharing your status passively with your trusted Circle." />
+  <meta property="og:url" content="https://obserc.com/blog/status-tab.html" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .article-hero{padding-top:calc(var(--nav-h) + 80px);padding-bottom:60px;text-align:center;max-width:800px;margin:0 auto}
+    .article-meta{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px;flex-wrap:wrap}
+    .article-category{display:inline-flex;align-items:center;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border:1px solid rgba(59,130,246,0.2);padding:4px 12px;border-radius:100px}
+    .article-meta-dot{width:3px;height:3px;background:var(--border-strong);border-radius:50%}
+    .article-meta-text{font-size:13px;color:var(--muted);font-weight:500}
+    .article-title{font-family:var(--font-display);font-size:clamp(28px,4vw,48px);font-weight:800;line-height:1.1;letter-spacing:-1.5px;color:var(--text);margin-bottom:20px}
+    .article-subtitle{font-size:var(--text-lg);color:var(--muted);line-height:1.65}
+    .article-divider{width:60px;height:3px;background:var(--accent);border-radius:2px;margin:40px auto}
+    .article-body{max-width:720px;margin:0 auto;padding-bottom:80px}
+    .article-body h2{font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--text);margin:44px 0 16px;letter-spacing:-0.5px}
+    .article-body p{font-size:17px;color:#374151;line-height:1.8;margin-bottom:20px}
+    .article-body ul{margin:0 0 20px 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+    .article-body ul li{font-size:16px;color:#374151;line-height:1.7;padding-left:24px;position:relative}
+    .article-body ul li::before{content:'';position:absolute;left:0;top:11px;width:8px;height:8px;background:var(--accent);border-radius:50%}
+    .article-body strong{color:var(--text);font-weight:700}
+    .pullquote{background:var(--accent-light);border-left:4px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:24px 28px;margin:36px 0}
+    .pullquote p{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--accent-dark);line-height:1.5;margin:0;letter-spacing:-0.3px}
+    .article-cta{background:var(--navy);border-radius:var(--radius-lg);padding:40px 36px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:56px}
+    .article-cta-text p.section-label{color:rgba(255,255,255,0.45);margin-bottom:8px}
+    .article-cta-text h3{font-family:var(--font-display);font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;letter-spacing:-0.5px}
+    .article-cta-text p.desc{font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6}
+    .article-cta .btn-white{flex-shrink:0}
+    .back-link{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--accent);margin-bottom:40px;transition:gap 0.2s}
+    .back-link:hover{gap:10px}
+    @media(max-width:600px){.article-hero{padding-top:calc(var(--nav-h) + 60px)}.article-cta{flex-direction:column}.article-cta .btn-white{width:100%;justify-content:center}}
+  </style>
+</head>
+<body>
+  <nav class="pill-nav" role="navigation" aria-label="Main navigation">
+    <a href="/" class="nav-logo-circle" aria-label="Obserc home">
+      <img src="../obserc-favicon.svg" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="eager" />
+      <span class="nav-logo-fallback" style="display:none;" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg></span>
+    </a>
+    <div class="nav-menu-wrapper" id="nav-wrapper">
+      <div class="nav-slider" id="nav-slider"></div>
+      <a href="/" class="nav-item">Home</a>
+      <a href="../guides.html" class="nav-item">Guides</a>
+      <a href="../features.html" class="nav-item">Features</a>
+      <a href="../support.html" class="nav-item">Support</a>
+      <a href="index.html" class="nav-item default-active">Blog</a>
+      <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="nav-item" target="_blank" rel="noopener noreferrer">Get Started</a>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="article-hero">
+      <div class="article-meta">
+        <span class="article-category">Features</span>
+        <span class="article-meta-dot"></span>
+        <span class="article-meta-text">March 30, 2026</span>
+        <span class="article-meta-dot"></span>
+        <span class="article-meta-text">4 min read</span>
+      </div>
+      <h1 class="article-title">The Status Tab: Stay Visible to Your Circle Without Constant Texting</h1>
+      <p class="article-subtitle">The low-level anxiety of wondering if someone got home safely is universal. Obserc's Status Tab eliminates it quietly, without anyone having to send a single message.</p>
+    </div>
+    <div class="article-divider" aria-hidden="true"></div>
+    <article class="article-body">
+      <a href="index.html" class="back-link" aria-label="Back to blog">Back to Blog</a>
+      <p>There is a particular kind of worry that sits at the back of your mind on a late night. Your flatmate is still out. Your partner's train was supposed to arrive an hour ago. Your kid drove home from a party and you have not heard from them. It is not panic, it is that quiet background hum of not knowing. The Status Tab in Obserc was built to silence it.</p>
+      <p>Rather than requiring active check-ins or a stream of "just got home" texts, the Status Tab keeps your Circle passively informed about where you are in your day. It is ambient safety, visibility without effort.</p>
+
+      <h2>What the Status Tab Does</h2>
+      <p>The Status Tab is your personal safety dashboard and your Circle's window into your current situation. It shows your active status, whether you are home, out, travelling, in Night Out Mode, or driving, and updates automatically based on what you are doing in the app.</p>
+      <p>Your Circle members see your status in their own Status Tab. Not a constant stream of notifications, but a calm, readable view of where everyone is and whether they are okay. Think of it like a quiet shared board that only the people who matter can see.</p>
+
+      <div class="pullquote"><p>"The Status Tab turns 'did you get home okay?' from a question you have to ask into information that is simply there."</p></div>
+
+      <h2>Use Cases: When the Status Tab Matters Most</h2>
+      <p>The Status Tab is most powerful in three everyday scenarios:</p>
+      <ul>
+        <li><strong>Late-night commutes</strong>, Your Circle can see when you are on your way home and when you have arrived, without needing a text.</li>
+        <li><strong>Nights out</strong>, Activate Night Out Mode and your status reflects that you are out. Your Circle knows not to worry, and they know when it ends.</li>
+        <li><strong>Travel days</strong>, Long journeys, layovers, and new cities are times when people worry most. A live status removes that uncertainty for everyone.</li>
+      </ul>
+      <p>It also works for the quieter moments: a solo run at dusk, an afternoon in an unfamiliar neighbourhood, a long drive to visit family. Any time when someone would otherwise wonder, the Status Tab answers the question before it is asked.</p>
+
+      <h2>How It Updates Automatically</h2>
+      <p>Obserc's Status Tab updates in several ways. Some updates are manual, you tap to set your status as Home, Out, or Travelling. Others are automatic, triggered by features you activate. Starting Drive Mode updates your status to Driving. Activating Night Out Mode sets your status to Night Out. Arriving at a saved location can trigger a check-in that updates your status to Home.</p>
+      <p>The result is a status that reflects your real life without requiring constant attention. You do not need to remember to text anyone. The app does it quietly, in the background, in a way that only your trusted Circle can see.</p>
+
+      <h2>Privacy and Control</h2>
+      <p>You always control what your Circle can see. If you need privacy for a particular period, a meeting, a personal appointment, or simply some time to yourself, you can switch to Ghost Mode with one tap. Your status pauses, no one is notified, and you can resume sharing whenever you like. The Status Tab is built to serve you, not to surveil you.</p>
+
+      <div class="article-cta">
+        <div class="article-cta-text">
+          <p class="section-label">Free on the App Store</p>
+          <h3>Stop the 'are you home?' text forever</h3>
+          <p class="desc">Get Obserc and let your Circle know you are safe, automatically.</p>
+        </div>
+        <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="btn-white" target="_blank" rel="noopener noreferrer" aria-label="Download Obserc on the App Store">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          Download Now
+        </a>
+      </div>
+    </article>
+  </div>
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">
+            <img src="../obserc-logo.png" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="lazy" />
+            <span class="footer-logo-fallback" style="display:none;" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg></span>
+            Obserc
+          </div>
+          <p class="footer-tagline">Your world. Shared and Secured. Personal safety for you and everyone you care about.</p>
+        </div>
+        <nav aria-label="Product links"><h4>Product</h4><ul class="footer-links"><li><a href="../features.html">Features</a></li><li><a href="../guides.html">Guides</a></li><li><a href="index.html">Blog</a></li><li><a href="https://apps.apple.com/ca/app/obserc/id6759740570" target="_blank" rel="noopener noreferrer">App Store</a></li></ul></nav>
+        <nav aria-label="Support links"><h4>Support</h4><ul class="footer-links"><li><a href="../support.html">Contact Us</a></li><li><a href="../faq.html">FAQ</a></li><li><a href="mailto:support@obserc.com">support@obserc.com</a></li></ul></nav>
+        <nav aria-label="Legal links"><h4>Legal</h4><ul class="footer-links"><li><a href="../privacy.html">Privacy Policy</a></li><li><a href="../terms.html">Terms of Service</a></li></ul></nav>
+      </div>
+      <div class="footer-bottom">
+        <p>Copyright <span id="year">2026</span> Obserc. All rights reserved.</p>
+        <div class="footer-socials" aria-label="Social links">
+          <a href="https://devpost.com/software/obserc" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Obserc on Devpost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg></a>
+          <a href="mailto:support@obserc.com" class="social-btn" aria-label="Email Obserc support"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const navItems = document.querySelectorAll('.nav-item');
+    const navSlider = document.getElementById('nav-slider');
+    const navWrapper = document.getElementById('nav-wrapper');
+    const defaultActive = document.querySelector('.nav-item.default-active');
+    function moveSliderTo(item) {
+      if (!item || !navWrapper) return;
+      if (window.matchMedia && window.matchMedia('(max-width:600px)').matches) {
+        navItems.forEach(nav => nav.classList.remove('active-text'));
+        item.classList.add('active-text');
+        if (navSlider) { navSlider.style.width = ''; navSlider.style.left = ''; }
+        return;
+      }
+      if(!navSlider) return;
+      const itemRect = item.getBoundingClientRect();
+      const wrapperRect = navWrapper.getBoundingClientRect();
+      navSlider.style.width = itemRect.width + 'px';
+      navSlider.style.left = (itemRect.left - wrapperRect.left) + 'px';
+      navItems.forEach(nav => nav.classList.remove('active-text'));
+      item.classList.add('active-text');
+    }
+    if(defaultActive) moveSliderTo(defaultActive);
+    window.addEventListener('resize', () => { if (defaultActive) moveSliderTo(defaultActive); });
+    navItems.forEach(item => { item.addEventListener('mouseenter', () => moveSliderTo(item)); });
+    if(navWrapper) { navWrapper.addEventListener('mouseleave', () => { if(defaultActive) moveSliderTo(defaultActive); }); }
+  </script>
+</body>
+</html>

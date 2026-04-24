@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog, Obserc</title>
+  <meta name="description" content="Safety tips, feature deep-dives, and updates from the Obserc team. Learn how to get the most out of your personal safety circle." />
+  <link rel="canonical" href="https://obserc.com/blog/" />
+  <link rel="icon" type="image/svg+xml" href="../obserc-favicon.svg" />
+  <link rel="icon" type="image/png" href="../obserc-logo.png" sizes="32x32" />
+  <meta property="og:title" content="Blog, Obserc" />
+  <meta property="og:description" content="Safety tips, feature deep-dives, and updates from the Obserc team." />
+  <meta property="og:url" content="https://obserc.com/blog/" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .blog-hero {
+      padding-top: calc(var(--nav-h) + 80px);
+      padding-bottom: 60px;
+      text-align: center;
+    }
+    .blog-hero .section-label { margin-bottom: 16px; }
+    .blog-hero .section-heading { margin-bottom: 16px; }
+    .blog-hero .section-sub { margin: 0 auto; }
+
+    .blog-grid-section {
+      padding: 0 0 100px;
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .blog-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .blog-card:hover {
+      border-color: rgba(59,130,246,0.25);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .blog-card-body {
+      padding: 28px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .blog-category {
+      display: inline-flex;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      border: 1px solid rgba(59,130,246,0.2);
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+    .blog-category.yellow {
+      color: var(--yellow);
+      background: var(--yellow-light);
+      border-color: rgba(245,166,35,0.2);
+    }
+    .blog-meta-dot {
+      width: 3px;
+      height: 3px;
+      background: var(--border-strong);
+      border-radius: 50%;
+    }
+    .blog-meta-text {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .blog-card-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.25;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .blog-card-excerpt {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 24px;
+    }
+    .blog-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .blog-date {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .blog-read-more {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s;
+    }
+    .blog-card:hover .blog-read-more { gap: 8px; }
+
+    .blog-card-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+    .blog-card-img.blue  { background: linear-gradient(135deg, var(--accent-light) 0%, #dbeafe 100%); }
+    .blog-card-img.navy  { background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); }
+    .blog-card-img.yellow{ background: linear-gradient(135deg, var(--yellow-light) 0%, #fef3c7 100%); }
+
+    @media (max-width: 900px) {
+      .blog-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .blog-grid { grid-template-columns: 1fr; }
+      .blog-hero { padding-top: calc(var(--nav-h) + 60px); }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="pill-nav" role="navigation" aria-label="Main navigation">
+  <a href="/" class="nav-logo-circle" aria-label="Obserc home">
+    <img src="../obserc-favicon.svg" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="eager" />
+    <span class="nav-logo-fallback" style="display:none;" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg>
+    </span>
+  </a>
+  <div class="nav-menu-wrapper" id="nav-wrapper">
+    <div class="nav-slider" id="nav-slider"></div>
+    <a href="/" class="nav-item">Home</a>
+    <a href="../guides.html" class="nav-item">Guides</a>
+    <a href="../features.html" class="nav-item">Features</a>
+    <a href="../support.html" class="nav-item">Support</a>
+    <a href="index.html" class="nav-item default-active">Blog</a>
+    <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="nav-item" target="_blank" rel="noopener noreferrer">Get Started</a>
+  </div>
+</nav>
+
+<section class="blog-hero" aria-labelledby="blog-hero-heading">
+  <div class="container">
+    <p class="section-label">Obserc Blog</p>
+    <h1 class="section-heading" id="blog-hero-heading">Safety insights &amp;<br/>feature updates.</h1>
+    <p class="section-sub">Tips, deep-dives, and stories from the team building personal safety for everyone.</p>
+  </div>
+</section>
+
+<section class="blog-grid-section" aria-labelledby="blog-grid-heading">
+  <div class="container">
+    <div class="blog-grid">
+
+      <!-- Card 1 -->
+      <a href="introducing-obserc.html" class="blog-card reveal" aria-label="Read: Introducing Obserc">
+        <div class="blog-card-img blue" aria-hidden="true">🛡️</div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta">
+            <span class="blog-category">About</span>
+            <span class="blog-meta-dot"></span>
+            <span class="blog-meta-text">3 min read</span>
+          </div>
+          <p class="blog-card-title">Introducing Obserc: The Personal Safety App Built Around Your Circle</p>
+          <p class="blog-card-excerpt">Meet Obserc, the iOS safety app that replaces reactive panic buttons with a proactive safety net built around the people you trust most. Here’s what we built and why.</p>
+          <div class="blog-card-footer">
+            <span class="blog-date">March 29, 2026</span>
+            <span class="blog-read-more">Read more →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="night-out-mode.html" class="blog-card reveal" style="transition-delay:0.08s;" aria-label="Read: Night Out Mode deep-dive">
+        <div class="blog-card-img navy" aria-hidden="true">🌙</div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta">
+            <span class="blog-category">Features</span>
+            <span class="blog-meta-dot"></span>
+            <span class="blog-meta-text">3 min read</span>
+          </div>
+          <p class="blog-card-title">Night Out Mode: How Obserc Keeps You Safe When It Matters Most</p>
+          <p class="blog-card-excerpt">From Wingman setup to the Morning After Report, Night Out Mode is Obserc’s most powerful feature. Here’s everything it does and how to use it.</p>
+          <div class="blog-card-footer">
+            <span class="blog-date">March 29, 2026</span>
+            <span class="blog-read-more">Read more →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="obserc-drive.html" class="blog-card reveal" style="transition-delay:0.16s;" aria-label="Read: Obserc Drive deep-dive">
+        <div class="blog-card-img yellow" aria-hidden="true">🚗</div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta">
+            <span class="blog-category yellow">Features</span>
+            <span class="blog-meta-dot"></span>
+            <span class="blog-meta-text">3 min read</span>
+          </div>
+          <p class="blog-card-title">Never Drive Alone: How Obserc Watches Over Every Journey</p>
+          <p class="blog-card-excerpt">Obserc Drive quietly monitors every trip, alerting your circle when you arrive safely and detecting hard braking events, all without sharing data with insurers.</p>
+          <div class="blog-card-footer">
+            <span class="blog-date">March 29, 2026</span>
+            <span class="blog-read-more">Read more →</span>
+          </div>
+        </div>
+      </a>
+        <!-- Card 4 -->
+        <a href="circles-feature.html" class="blog-card reveal" style="transition-delay:0.08s;" aria-label="Read: Your Trusted Circle">
+          <div class="blog-card-img blue" aria-hidden="true">&#128101;</div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-category">Features</span>
+              <span class="blog-meta-dot"></span>
+              <span class="blog-meta-text">4 min read</span>
+            </div>
+            <p class="blog-card-title">Your Trusted Circle: How Obserc's Circle System Works</p>
+            <p class="blog-card-excerpt">In an emergency, strangers cannot help you the way the right five people can. Here is how to build your Circle and why it is the foundation of everything.</p>
+            <div class="blog-card-footer">
+              <span class="blog-date">March 30, 2026</span>
+              <span class="blog-read-more">Read more &#8594;</span>
+            </div>
+          </div>
+        </a>
+        <!-- Card 5 -->
+        <a href="sos-beacon.html" class="blog-card reveal" style="transition-delay:0.16s;" aria-label="Read: SOS Beacon explained">
+          <div class="blog-card-img navy" aria-hidden="true">&#128680;</div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-category">Features</span>
+              <span class="blog-meta-dot"></span>
+              <span class="blog-meta-text">4 min read</span>
+            </div>
+            <p class="blog-card-title">SOS Beacon: Obserc's Most Powerful Emergency Feature Explained</p>
+            <p class="blog-card-excerpt">When every second counts, the SOS Beacon cuts through everything. Here is exactly how it works and what your Circle receives when you trigger it.</p>
+            <div class="blog-card-footer">
+              <span class="blog-date">March 30, 2026</span>
+              <span class="blog-read-more">Read more &#8594;</span>
+            </div>
+          </div>
+        </a>
+        <!-- Card 6 -->
+        <a href="status-tab.html" class="blog-card reveal" style="transition-delay:0.24s;" aria-label="Read: The Status Tab">
+          <div class="blog-card-img blue" aria-hidden="true">&#128205;</div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-category">Features</span>
+              <span class="blog-meta-dot"></span>
+              <span class="blog-meta-text">4 min read</span>
+            </div>
+            <p class="blog-card-title">The Status Tab: Stay Visible to Your Circle Without Constant Texting</p>
+            <p class="blog-card-excerpt">The low-level anxiety of wondering if someone got home safely is universal. Obserc's Status Tab eliminates it quietly, without anyone sending a single message.</p>
+            <div class="blog-card-footer">
+              <span class="blog-date">March 30, 2026</span>
+              <span class="blog-read-more">Read more &#8594;</span>
+            </div>
+          </div>
+        </a>
+        <!-- Card 7 -->
+        <a href="safety-call.html" class="blog-card reveal" style="transition-delay:0.08s;" aria-label="Read: Safety Call feature">
+          <div class="blog-card-img navy" aria-hidden="true">&#128222;</div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-category">Features</span>
+              <span class="blog-meta-dot"></span>
+              <span class="blog-meta-text">4 min read</span>
+            </div>
+            <p class="blog-card-title">Safety Call: The Feature That Gives You a Discreet Exit</p>
+            <p class="blog-card-excerpt">Sometimes the safest thing is a graceful way out. Safety Call triggers a fake incoming call so you can leave any uncomfortable situation without explanation.</p>
+            <div class="blog-card-footer">
+              <span class="blog-date">March 30, 2026</span>
+              <span class="blog-read-more">Read more &#8594;</span>
+            </div>
+          </div>
+        </a>
+        <!-- Card 8 -->
+        <a href="i-feel-off.html" class="blog-card reveal" style="transition-delay:0.16s;" aria-label="Read: I Feel Off button">
+          <div class="blog-card-img yellow" aria-hidden="true">&#9889;</div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-category yellow">Features</span>
+              <span class="blog-meta-dot"></span>
+              <span class="blog-meta-text">4 min read</span>
+            </div>
+            <p class="blog-card-title">The I Feel Off Button: Why Obserc Built a Feature for Gut Feelings</p>
+            <p class="blog-card-excerpt">You cannot always explain it. Something just feels wrong. The I Feel Off button was designed for exactly that moment, before panic, before certainty.</p>
+            <div class="blog-card-footer">
+              <span class="blog-date">March 30, 2026</span>
+              <span class="blog-read-more">Read more &#8594;</span>
+            </div>
+          </div>
+        </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" aria-labelledby="blog-cta-heading">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <div class="cta-glow cta-glow-1" aria-hidden="true"></div>
+      <div class="cta-glow cta-glow-2" aria-hidden="true"></div>
+      <div style="position:relative;z-index:1;">
+        <p class="section-label" style="color:rgba(255,255,255,0.4);">Free Download</p>
+        <h2 class="section-heading" id="blog-cta-heading" style="color:#fff;">Ready to protect<br/>your circle?</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,0.55);margin:0 auto 40px;">Get Obserc on the App Store. Everything you’ve read about, in your pocket.</p>
+        <div class="cta-actions">
+          <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="btn-white" target="_blank" rel="noopener noreferrer" aria-label="Download Obserc on App Store">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Download Now
+          </a>
+          <a href="/" class="btn-ghost">Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="../obserc-logo.png" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="lazy" />
+          <span class="footer-logo-fallback" style="display:none;" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg></span>
+          Obserc
+        </div>
+        <p class="footer-tagline">Your world. Shared &amp; Secured. Personal safety for you and everyone you care about.</p>
+      </div>
+      <nav aria-label="Product links"><h4>Product</h4>
+        <ul class="footer-links">
+          <li><a href="../features.html">Features</a></li>
+          <li><a href="../guides.html">Guides</a></li>
+          <li><a href="index.html">Blog</a></li>
+          <li><a href="https://apps.apple.com/ca/app/obserc/id6759740570" target="_blank" rel="noopener noreferrer">App Store</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Support links"><h4>Support</h4>
+        <ul class="footer-links">
+          <li><a href="../support.html">Contact Us</a></li>
+          <li><a href="../faq.html">FAQ</a></li>
+          <li><a href="mailto:support@obserc.com">support@obserc.com</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Legal links"><h4>Legal</h4>
+        <ul class="footer-links">
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year">2026</span> Obserc. All rights reserved.</p>
+      <div class="footer-socials" aria-label="Social links">
+        <a href="https://devpost.com/software/obserc" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Obserc on Devpost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg></a>
+        <a href="mailto:support@obserc.com" class="social-btn" aria-label="Email Obserc support"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  const navItems = document.querySelectorAll('.nav-item');
+  const navSlider = document.getElementById('nav-slider');
+  const navWrapper = document.getElementById('nav-wrapper');
+  const defaultActive = document.querySelector('.nav-item.default-active');
+  function moveSliderTo(item) {
+    if (!item || !navWrapper) return;
+    if (window.matchMedia && window.matchMedia('(max-width:600px)').matches) {
+      navItems.forEach(nav => nav.classList.remove('active-text'));
+      item.classList.add('active-text');
+      if (navSlider) { navSlider.style.width = ''; navSlider.style.left = ''; }
+      return;
+    }
+    if(!navSlider) return;
+    const itemRect = item.getBoundingClientRect();
+    const wrapperRect = navWrapper.getBoundingClientRect();
+    navSlider.style.width = `${itemRect.width}px`;
+    navSlider.style.left = `${itemRect.left - wrapperRect.left}px`;
+    navItems.forEach(nav => nav.classList.remove('active-text'));
+    item.classList.add('active-text');
+  }
+  if(defaultActive) moveSliderTo(defaultActive);
+  window.addEventListener('resize', () => { if (defaultActive) moveSliderTo(defaultActive); });
+  navItems.forEach(item => { item.addEventListener('mouseenter', () => moveSliderTo(item)); });
+  if(navWrapper) { navWrapper.addEventListener('mouseleave', () => { if(defaultActive) moveSliderTo(defaultActive); }); }
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), i * 55); revealObs.unobserve(entry.target); }
+    });
+  }, { threshold: 0.10, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+</body>
+</html>

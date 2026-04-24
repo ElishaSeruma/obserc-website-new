@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOS Beacon: Obserc's Most Powerful Emergency Feature Explained</title>
+  <meta name="description" content="Learn how Obserc's SOS Beacon works, when to use it, and what your trusted Circle receives when you trigger it." />
+  <link rel="canonical" href="https://obserc.com/blog/sos-beacon.html" />
+  <link rel="icon" type="image/svg+xml" href="../obserc-favicon.svg" />
+  <link rel="icon" type="image/png" href="../obserc-logo.png" sizes="32x32" />
+  <meta property="og:title" content="SOS Beacon: Obserc's Most Powerful Emergency Feature Explained" />
+  <meta property="og:description" content="How Obserc's SOS Beacon works, when to use it, and what your trusted Circle receives when you trigger it." />
+  <meta property="og:url" content="https://obserc.com/blog/sos-beacon.html" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .article-hero{padding-top:calc(var(--nav-h) + 80px);padding-bottom:60px;text-align:center;max-width:800px;margin:0 auto}
+    .article-meta{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px;flex-wrap:wrap}
+    .article-category{display:inline-flex;align-items:center;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border:1px solid rgba(59,130,246,0.2);padding:4px 12px;border-radius:100px}
+    .article-meta-dot{width:3px;height:3px;background:var(--border-strong);border-radius:50%}
+    .article-meta-text{font-size:13px;color:var(--muted);font-weight:500}
+    .article-title{font-family:var(--font-display);font-size:clamp(28px,4vw,48px);font-weight:800;line-height:1.1;letter-spacing:-1.5px;color:var(--text);margin-bottom:20px}
+    .article-subtitle{font-size:var(--text-lg);color:var(--muted);line-height:1.65}
+    .article-divider{width:60px;height:3px;background:var(--accent);border-radius:2px;margin:40px auto}
+    .article-body{max-width:720px;margin:0 auto;padding-bottom:80px}
+    .article-body h2{font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--text);margin:44px 0 16px;letter-spacing:-0.5px}
+    .article-body p{font-size:17px;color:#374151;line-height:1.8;margin-bottom:20px}
+    .article-body ul{margin:0 0 20px 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+    .article-body ul li{font-size:16px;color:#374151;line-height:1.7;padding-left:24px;position:relative}
+    .article-body ul li::before{content:'';position:absolute;left:0;top:11px;width:8px;height:8px;background:var(--accent);border-radius:50%}
+    .article-body strong{color:var(--text);font-weight:700}
+    .pullquote{background:var(--accent-light);border-left:4px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:24px 28px;margin:36px 0}
+    .pullquote p{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--accent-dark);line-height:1.5;margin:0;letter-spacing:-0.3px}
+    .article-cta{background:var(--navy);border-radius:var(--radius-lg);padding:40px 36px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:56px}
+    .article-cta-text p.section-label{color:rgba(255,255,255,0.45);margin-bottom:8px}
+    .article-cta-text h3{font-family:var(--font-display);font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;letter-spacing:-0.5px}
+    .article-cta-text p.desc{font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6}
+    .article-cta .btn-white{flex-shrink:0}
+    .back-link{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--accent);margin-bottom:40px;transition:gap 0.2s}
+    .back-link:hover{gap:10px}
+    @media(max-width:600px){.article-hero{padding-top:calc(var(--nav-h) + 60px)}.article-cta{flex-direction:column}.article-cta .btn-white{width:100%;justify-content:center}}
+  </style>
+</head>
+<body>
+  <nav class="pill-nav" role="navigation" aria-label="Main navigation">
+    <a href="/" class="nav-logo-circle" aria-label="Obserc home">
+      <img src="../obserc-favicon.svg" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="eager" />
+      <span class="nav-logo-fallback" style="display:none;" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e1e1e" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg></span>
+    </a>
+    <div class="nav-menu-wrapper" id="nav-wrapper">
+      <div class="nav-slider" id="nav-slider"></div>
+      <a href="/" class="nav-item">Home</a>
+      <a href="../guides.html" class="nav-item">Guides</a>
+      <a href="../features.html" class="nav-item">Features</a>
+      <a href="../support.html" class="nav-item">Support</a>
+      <a href="index.html" class="nav-item default-active">Blog</a>
+      <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="nav-item" target="_blank" rel="noopener noreferrer">Get Started</a>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="article-hero">
+      <div class="article-meta">
+        <span class="article-category">Features</span>
+        <span class="article-meta-dot"></span>
+        <span class="article-meta-text">March 30, 2026</span>
+        <span class="article-meta-dot"></span>
+        <span class="article-meta-text">4 min read</span>
+      </div>
+      <h1 class="article-title">SOS Beacon: Obserc's Most Powerful Emergency Feature Explained</h1>
+      <p class="article-subtitle">When every second counts, the SOS Beacon cuts through everything. Here is exactly how it works, when to use it, and what happens on your Circle's end.</p>
+    </div>
+    <div class="article-divider" aria-hidden="true"></div>
+    <article class="article-body">
+      <a href="index.html" class="back-link" aria-label="Back to blog">Back to Blog</a>
+      <p>Every safety app promises an emergency button. What makes the difference is what happens after you press it. With Obserc's SOS Beacon, the answer is simple: every person in your Circle receives an immediate alert with your live location, and they know exactly what to do because they know you.</p>
+      <p>The SOS Beacon is the most powerful tool in Obserc, and it is deliberately designed to be simple enough to use under extreme stress. Here is how it works.</p>
+
+      <h2>How the SOS Beacon Works</h2>
+      <p>The SOS Beacon lives on the main screen of Obserc, always within reach. To send a standard alert to your Circle, you tap the beacon. To escalate to a Critical SOS, you hold it for three seconds. The hold mechanism is intentional, it prevents accidental triggers while ensuring that even in a shaking, panicked hand, a deliberate press will always connect.</p>
+      <p>When you trigger the SOS Beacon, Obserc immediately broadcasts an emergency alert to every member of your Circle. That alert includes your precise GPS coordinates, a timestamp, and a live-updating location link so your Circle can track where you are in real time as the situation develops.</p>
+
+      <div class="pullquote"><p>"The SOS Beacon is the last line of defence, but because your Circle already knows your context, they know exactly how to respond."</p></div>
+
+      <h2>What Your Circle Receives</h2>
+      <p>When a beacon fires, every Circle member gets a high-priority push notification that cannot be silenced by Do Not Disturb. The notification includes:</p>
+      <ul>
+        <li><strong>Your name and the alert type</strong>, Standard SOS or Critical SOS, so they know the urgency level.</li>
+        <li><strong>Your live location</strong>, A real-time map link that updates as you move.</li>
+        <li><strong>The time the beacon was triggered</strong>, So they know how long ago the situation started.</li>
+      </ul>
+      <p>Your Circle members are not left wondering what to do. Because they are your trusted contacts, they have the context to act: call you, call emergency services, head to your location, or alert others. The beacon does not replace 999 or 911, it gives the people who love you the information they need to mobilise immediately.</p>
+
+      <h2>SOS Beacon vs a Regular Emergency Call</h2>
+      <p>A standard emergency call is reactive and requires you to speak. The SOS Beacon is silent, instant, and works even if your phone is face-down in a pocket. There is no 30-second hold delay, no need to unlock your phone, and no requirement to explain your situation to a stranger.</p>
+      <p>Crucially, the SOS Beacon alerts multiple people simultaneously. A phone call reaches one person at a time. Your Circle gets the alert as a group, which means someone in a better position to help might respond first. Geography, availability, and capability all factor in, and your Circle accounts for all of them.</p>
+
+      <h2>When Should You Use the SOS Beacon?</h2>
+      <p>The SOS Beacon is for situations where you feel your safety is at risk and you need your trusted people to know immediately. This includes being followed, feeling threatened in a public space, a car incident, a sudden medical concern, or any moment where instinct says something is wrong and you need backup.</p>
+      <p>You do not need to be certain something bad is happening. If it feels serious enough to want someone to know where you are, the beacon is the right call. That is what your Circle is for.</p>
+
+      <div class="article-cta">
+        <div class="article-cta-text">
+          <p class="section-label">Free on the App Store</p>
+          <h3>Download Obserc today</h3>
+          <p class="desc">The SOS Beacon is free to use. Build your Circle and be ready before you need it.</p>
+        </div>
+        <a href="https://apps.apple.com/ca/app/obserc/id6759740570" class="btn-white" target="_blank" rel="noopener noreferrer" aria-label="Download Obserc on the App Store">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          Download Now
+        </a>
+      </div>
+    </article>
+  </div>
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">
+            <img src="../obserc-logo.png" alt="Obserc logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" loading="lazy" />
+            <span class="footer-logo-fallback" style="display:none;" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg></span>
+            Obserc
+          </div>
+          <p class="footer-tagline">Your world. Shared and Secured. Personal safety for you and everyone you care about.</p>
+        </div>
+        <nav aria-label="Product links"><h4>Product</h4><ul class="footer-links"><li><a href="../features.html">Features</a></li><li><a href="../guides.html">Guides</a></li><li><a href="index.html">Blog</a></li><li><a href="https://apps.apple.com/ca/app/obserc/id6759740570" target="_blank" rel="noopener noreferrer">App Store</a></li></ul></nav>
+        <nav aria-label="Support links"><h4>Support</h4><ul class="footer-links"><li><a href="../support.html">Contact Us</a></li><li><a href="../faq.html">FAQ</a></li><li><a href="mailto:support@obserc.com">support@obserc.com</a></li></ul></nav>
+        <nav aria-label="Legal links"><h4>Legal</h4><ul class="footer-links"><li><a href="../privacy.html">Privacy Policy</a></li><li><a href="../terms.html">Terms of Service</a></li></ul></nav>
+      </div>
+      <div class="footer-bottom">
+        <p>Copyright <span id="year">2026</span> Obserc. All rights reserved.</p>
+        <div class="footer-socials" aria-label="Social links">
+          <a href="https://devpost.com/software/obserc" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Obserc on Devpost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/></svg></a>
+          <a href="mailto:support@obserc.com" class="social-btn" aria-label="Email Obserc support"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const navItems = document.querySelectorAll('.nav-item');
+    const navSlider = document.getElementById('nav-slider');
+    const navWrapper = document.getElementById('nav-wrapper');
+    const defaultActive = document.querySelector('.nav-item.default-active');
+    function moveSliderTo(item) {
+      if (!item || !navWrapper) return;
+      if (window.matchMedia && window.matchMedia('(max-width:600px)').matches) {
+        navItems.forEach(nav => nav.classList.remove('active-text'));
+        item.classList.add('active-text');
+        if (navSlider) { navSlider.style.width = ''; navSlider.style.left = ''; }
+        return;
+      }
+      if(!navSlider) return;
+      const itemRect = item.getBoundingClientRect();
+      const wrapperRect = navWrapper.getBoundingClientRect();
+      navSlider.style.width = itemRect.width + 'px';
+      navSlider.style.left = (itemRect.left - wrapperRect.left) + 'px';
+      navItems.forEach(nav => nav.classList.remove('active-text'));
+      item.classList.add('active-text');
+    }
+    if(defaultActive) moveSliderTo(defaultActive);
+    window.addEventListener('resize', () => { if (defaultActive) moveSliderTo(defaultActive); });
+    navItems.forEach(item => { item.addEventListener('mouseenter', () => moveSliderTo(item)); });
+    if(navWrapper) { navWrapper.addEventListener('mouseleave', () => { if(defaultActive) moveSliderTo(defaultActive); }); }
+  </script>
+</body>
+</html>

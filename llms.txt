@@ -1,0 +1,40 @@
+# Obserc: Personal Safety App
+
+> Your world. Shared & Secured.
+
+Obserc is a proactive personal safety app for iOS that keeps users quietly connected to the people who matter most. Instead of waiting for an emergency to happen, Obserc creates a live safety net around the user before anything goes wrong. 
+
+## App Store Download
+- iOS App Store: https://apps.apple.com/ca/app/obserc/id6759740570
+
+## Target Audience
+Students, young women, friends, families, and drivers who want to share safety awareness without the noise of a standard group chat.
+
+## Core Features
+- **Circles:** Private groups of trusted people who share safety awareness.
+- **Status Tab:** The home base for checking safety state, sending check-ins, and nudging friends.
+- **SOS Beacon:** A one-tap urgent alert that sends live location to the user's circle. Includes a "Critical SOS" override (hold for 3 seconds) for immediate danger.
+- **Night Out Mode:** A dedicated nightlife safety mode featuring "Find My Squad" radar, an "I Feel Off" button, Safety Call (fake phone call to escape awkward situations), and Morning After Reports.
+- **Circle Map:** Real-time location sharing map with "Ghost Mode" for temporary, absolute privacy.
+- **Obserc Drive:** Passive driving safety monitoring that alerts circles upon safe arrival and detects hard braking events, keeping data strictly private from insurers.
+- **Streaks:** A daily habit-building system (Firewood to Phoenix) rewarding regular check-ins.
+
+## Site Structure & Documentation
+- [Home](https://obserc.com) - Main landing page.
+- [Features](https://obserc.com/features.html) - Deep dive into Obserc's capabilities.
+- [Guides & User Manual](https://obserc.com/guides.html) - Full documentation on how to use every feature in the app.
+- [FAQ](https://obserc.com/faq.html) - Answers to common questions about features, privacy, and tracking.
+- [Support](https://obserc.com/support.html) - Contact our team for help.
+- [Location Usage](https://obserc.com/location-usage.html) - Plain-english explanation of how Obserc uses location data (we do not sell data to third parties).
+- [Privacy Policy](https://obserc.com/privacy.html) - Full legal privacy policy.
+- [Terms & Conditions](https://obserc.com/terms.html) - Legal terms of service.
+
+## Contact & Support
+- Email Support: support@obserc.com
+- Devpost Project: https://devpost.com/software/obserc
+## Blog
+
+- /blog/index.html: Blog index — listing of all Obserc blog posts
+- /blog/introducing-obserc.html: Introducing Obserc — the story and philosophy behind the personal safety app
+- /blog/night-out-mode.html: Night Out Mode — how Obserc keeps you safe on a night out with squad tracking, I Feel Off, and Safety Call
+- /blog/obserc-drive.html: Obserc Drive — automatic journey detection, live drive cards, Drive Score, Drive SOS, and safe arrival notifications
